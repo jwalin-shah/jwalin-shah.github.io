@@ -53,12 +53,12 @@ window.PROJECTS = [
   {
     slug: "openhuman",
     title: "OpenHuman",
-    kicker: "Personal AI super intelligence",
+    kicker: "Contributor · Personal AI super intelligence",
     blurb: "Open-source agentic desktop assistant. Local-first knowledge base, deep OS integration, one account for many providers.",
-    longBlurb: "A clean desktop experience that goes from install to working agent in a few clicks. Workflow data stays on device, encrypted locally. Rust core with local AI paths.",
+    longBlurb: "A clean desktop experience that goes from install to working agent in a few clicks. Workflow data stays on device, encrypted locally. Contributing to the upstream project at tinyhumansai/openhuman.",
     metrics: [
-      { k: "platforms", v: "3", unit: "macOS · Windows · Linux" },
-      { k: "core", v: "Rust" },
+      { k: "stars", v: "247", unit: "upstream" },
+      { k: "forks", v: "36" },
       { k: "license", v: "GNU" },
       { k: "stage", v: "early beta" },
     ],
@@ -69,7 +69,7 @@ window.PROJECTS = [
       "Inline autocomplete + voice (STT/TTS) anywhere on desktop",
     ],
     stack: ["Rust", "Local AI", "MCP", "Skills"],
-    repo: "jwalin-shah/openhuman",
+    repo: "tinyhumansai/openhuman",
     color: "violet",
   },
   {
