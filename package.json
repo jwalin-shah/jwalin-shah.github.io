@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build": "esbuild src/main.jsx --bundle --minify --sourcemap --outfile=dist/site.js",
+    "smoke": "npm run build && node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.11"
+  }
+}

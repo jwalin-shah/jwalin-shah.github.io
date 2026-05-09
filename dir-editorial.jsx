@@ -1,3 +1,5 @@
+import React from "react";
+
 // EDITORIAL — research-lab notebook layout.
 // Serif headlines, dense data, real links, contact CTA.
 
@@ -14,7 +16,7 @@ const EditorialDir = () => {
         {/* Masthead — research-lab voice, no fake issue numbers */}
         <header className="ed-masthead">
           <div className="ed-mast-row">
-            <span className="ed-mast-vol">EST. 2024 · UPDATED APR 2026</span>
+            <span className="ed-mast-vol">EST. 2024 · SNAPSHOT VERIFIED APR 2026</span>
             <span className="ed-mast-loc">FILED FROM SF</span>
           </div>
           <h1 className="ed-mast-title">Jwalin Shah</h1>
@@ -61,6 +63,15 @@ const EditorialDir = () => {
                 <div className="ed-feat-kicker">{p.kicker}</div>
                 <h3 className="ed-feat-title">{p.title}</h3>
                 <p className="ed-feat-blurb">{p.blurb}</p>
+                <div className="ed-snapshot">
+                  {p.evidence ? (
+                    <a href={p.evidence} target="_blank" rel="noopener">
+                      metrics snapshot: {p.verified}
+                    </a>
+                  ) : (
+                    <span>metrics snapshot: {p.verified}</span>
+                  )}
+                </div>
                 <div className="ed-feat-stats">
                   {p.metrics.slice(0, 2).map((m, j) => (
                     <div key={j} className="ed-feat-stat">
@@ -95,19 +106,14 @@ const EditorialDir = () => {
               </tr>
             </thead>
             <tbody>
-              {[
-                { from: "officeqa-arena", line: "Shell `grep` on raw TXT (28KB) outperformed an 11GB SQLite + 10-component pipeline." },
-                { from: "officeqa-arena", line: "48% of failures = wrong table/row/column extraction. 0% of correctly-grounded answers had arithmetic errors." },
-                { from: "officeqa-arena", line: '"Review your intern\'s work" framing beat "verify your answer" by +13 points.' },
-                { from: "tensor-logic", line: "A 3-scalar TL recurrence beats a 71M-param MLP on transitive closure by 4+ orders of magnitude." },
-                { from: "tensor-logic", line: "TL is parameter-efficient when a closed-form operator exists; it cannot magic one into existence (XOR, parity, control flow)." },
-                { from: "jarvis", line: "Template-first + generation fallback drops cost and hallucination risk vs pure-generation pipelines." },
-                { from: "jarvis", line: "Local-first inference gives more predictable p95 latency than cloud-first under realistic load." },
-              ].map((row, i) => (
+              {window.FINDINGS.map((row, i) => (
                 <tr key={i}>
                   <td className="ed-td-no">{String(i + 1).padStart(2, "0")}</td>
                   <td className="ed-td-from">{row.from}</td>
-                  <td>{row.line}</td>
+                  <td>
+                    {row.line}
+                    <span className="ed-inline-source"> {row.source}</span>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -149,6 +155,7 @@ const EditorialDir = () => {
                 <a href="https://github.com/jwalin-shah?tab=repositories" target="_blank" rel="noopener">
                   github.com/jwalin-shah →
                 </a>
+                <span> · snapshot: {stats.verified}</span>
               </div>
             </div>
           </div>
@@ -163,7 +170,7 @@ const EditorialDir = () => {
 
           <div className="ed-ledger-grid">
             <div className="ed-ledger-langs">
-              <div className="ed-ledger-h">By Primary Language ({stats.publicRepos} public repos)</div>
+              <div className="ed-ledger-h">By Primary Language ({stats.publicRepos} public repos · {stats.verified})</div>
               {stats.topLangs.map((l, i) => (
                 <div key={i} className="ed-lang-row">
                   <div className="ed-lang-name">{l.lang}</div>
@@ -176,7 +183,7 @@ const EditorialDir = () => {
             </div>
 
             <div className="ed-ledger-themes">
-              <div className="ed-ledger-h">By Theme (weighted)</div>
+              <div className="ed-ledger-h">By Theme (curated labels · {stats.verified})</div>
               <div className="ed-themes">
                 {stats.themes.map((t, i) => (
                   <span
@@ -195,7 +202,7 @@ const EditorialDir = () => {
           </div>
 
           <div className="ed-ledger-activity">
-            <div className="ed-ledger-h">Recent Pushes</div>
+            <div className="ed-ledger-h">Recent Pushes ({stats.recentActivityVerified})</div>
             <table className="ed-table ed-table-compact">
               <tbody>
                 {stats.recentActivity.map((a, i) => (
@@ -276,6 +283,15 @@ const ProjectModal = ({ project, onClose }) => {
         <div className="ed-feat-kicker">{project.kicker}</div>
         <h2 className="ed-modal-title">{project.title}</h2>
         <p className="ed-modal-blurb">{project.longBlurb || project.blurb}</p>
+        <p className="ed-modal-source">
+          Metrics snapshot: {project.verified}
+          {project.evidence ? (
+            <>
+              {" · "}
+              <a href={project.evidence} target="_blank" rel="noopener">evidence link</a>
+            </>
+          ) : null}
+        </p>
 
         <div className="ed-modal-metrics">
           {project.metrics.map((m, i) => (
@@ -310,3 +326,4 @@ const ProjectModal = ({ project, onClose }) => {
 };
 
 window.EditorialDir = EditorialDir;
+export default EditorialDir;

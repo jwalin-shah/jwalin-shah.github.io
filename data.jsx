@@ -26,6 +26,16 @@ window.PROFILE = {
   ],
 };
 
+window.FINDINGS = [
+  { from: "officeqa-arena", line: "Shell `grep` on raw TXT (28KB) outperformed an 11GB SQLite + 10-component pipeline.", source: "snapshot: officeqa-arena README/results, Apr 2026" },
+  { from: "officeqa-arena", line: "48% of failures = wrong table/row/column extraction. 0% of correctly-grounded answers had arithmetic errors.", source: "snapshot: officeqa-arena failure analysis, Apr 2026" },
+  { from: "officeqa-arena", line: '"Review your intern\'s work" framing beat "verify your answer" by +13 points.', source: "snapshot: officeqa-arena eval notes, Apr 2026" },
+  { from: "tensor-logic", line: "A 3-scalar TL recurrence beats a 71M-param MLP on transitive closure by 4+ orders of magnitude.", source: "snapshot: tensor-logic README/results, Apr 2026" },
+  { from: "tensor-logic", line: "TL is parameter-efficient when a closed-form operator exists; it cannot magic one into existence (XOR, parity, control flow).", source: "curated project finding, Apr 2026" },
+  { from: "jarvis", line: "Template-first + generation fallback drops cost and hallucination risk vs pure-generation pipelines.", source: "curated project finding, Apr 2026" },
+  { from: "jarvis", line: "Local-first inference gives more predictable p95 latency than cloud-first under realistic load.", source: "curated project finding, Apr 2026" },
+];
+
 // 4 highlight projects + 2 supporting
 window.PROJECTS = [
   {
@@ -48,6 +58,8 @@ window.PROJECTS = [
     ],
     stack: ["MiniMax M2.5", "Goose", "OpenRouter", "Bash"],
     repo: "jwalin-shah/officeqa-arena",
+    evidence: "https://github.com/jwalin-shah/officeqa-arena",
+    verified: "Apr 2026 repo snapshot",
     color: "amber",
   },
   {
@@ -70,6 +82,8 @@ window.PROJECTS = [
     ],
     stack: ["Rust", "Local AI", "MCP", "Skills"],
     repo: "tinyhumansai/openhuman",
+    evidence: "https://github.com/tinyhumansai/openhuman",
+    verified: "Apr 2026 upstream GitHub snapshot",
     color: "violet",
   },
   {
@@ -92,6 +106,8 @@ window.PROJECTS = [
     ],
     stack: ["PyTorch", "einsum", "EWC"],
     repo: "jwalin-shah/tensor-logic",
+    evidence: "https://github.com/jwalin-shah/tensor-logic",
+    verified: "Apr 2026 repo snapshot",
     color: "lime",
   },
   {
@@ -114,6 +130,8 @@ window.PROJECTS = [
     ],
     stack: ["MLX", "sqlite-vec", "BM25", "FastAPI"],
     repo: "jwalin-shah/jarvis-ai-assistant",
+    evidence: "https://github.com/jwalin-shah/jarvis-ai-assistant",
+    verified: "Apr 2026 repo snapshot",
     color: "cyan",
   },
   {
@@ -128,6 +146,8 @@ window.PROJECTS = [
     ],
     stack: ["FastAPI", "Textual", "MLX Whisper", "Qwen"],
     repo: "jwalin-shah/inbox",
+    evidence: "https://github.com/jwalin-shah/inbox",
+    verified: "curated project snapshot, Apr 2026",
     color: "rose",
   },
   {
@@ -141,6 +161,8 @@ window.PROJECTS = [
     ],
     stack: ["FastAPI", "GRPO", "OpenEnv"],
     repo: "jwalin-shah/robo-replan",
+    evidence: "https://github.com/jwalin-shah/robo-replan",
+    verified: "curated project snapshot, Apr 2026",
     color: "orange",
   },
 ];
@@ -149,6 +171,7 @@ window.PROJECTS = [
 window.STATS = {
   totalRepos: 19,
   publicRepos: 19,
+  verified: "Apr 2026 GitHub snapshot",
   // Real counts from `gh repo list jwalin-shah` (Apr 2026): 13 Python, 1 TypeScript, 2 unspecified
   // Shown as % share of primary language across public repos
   topLangs: [
@@ -156,8 +179,7 @@ window.STATS = {
     { lang: "TypeScript", pct: 6 },
     { lang: "Other", pct: 13 },
   ],
-  // Mock contribution heatmap — 7 rows (days) × 26 cols (weeks of last 6 months)
-  // Higher density toward the right (recency)
+  // Synthetic contribution heatmap, kept as a visual density sketch and labeled in UI.
   contributions: Array.from({ length: 7 }, (_, r) =>
     Array.from({ length: 26 }, (_, c) => {
       const recency = c / 26;
@@ -167,6 +189,7 @@ window.STATS = {
     })
   ),
   // Themes Jwalin cares about, with a "weight"
+  themesVerified: "curated labels, Apr 2026",
   themes: [
     { label: "evaluation", weight: 1.0 },
     { label: "grounded reasoning", weight: 0.95 },
@@ -180,6 +203,7 @@ window.STATS = {
     { label: "robotics", weight: 0.5 },
   ],
   // Real recent pushes from `gh repo list` (Apr 2026)
+  recentActivityVerified: "Apr 2026 gh repo list snapshot",
   recentActivity: [
     { date: "Apr 29", what: "tensor-logic — runnable demos for Domingos paper", repo: "tensor-logic" },
     { date: "Apr 29", what: "fafsa-engine — neurosymbolic FAFSA SAI pipeline", repo: "fafsa-engine" },
