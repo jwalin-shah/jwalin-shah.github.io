@@ -1,0 +1,12 @@
+{
+  "name": "jwalin-shah-github-io",
+  "private": true,
+  "scripts": {
+    "build": "esbuild app-entry.jsx --bundle --format=iife --outfile=dist/app.js",
+    "smoke": "python3 scripts/smoke_static_build.py",
+    "validate": "npm run build && python3 scripts/validate_publication.py && npm run smoke"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12"
+  }
+}

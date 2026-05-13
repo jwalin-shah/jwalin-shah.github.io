@@ -1,0 +1,22 @@
+{
+  "profile": {
+    "name": "Jwalin Shah",
+    "email": "jwalinshah13@gmail.com",
+    "handle": "jwalin-shah"
+  },
+  "required_links": [
+    "https://jwalin-shah.github.io",
+    "https://github.com/jwalin-shah",
+    "https://linkedin.com/in/jwalin-shah",
+    "jwalinshah13@gmail.com"
+  ],
+  "required_project_slugs": [
+    "officeqa-arena",
+    "openhuman",
+    "tensor-logic",
+    "jarvis",
+    "inbox",
+    "robo-replan"
+  ],
+  "update_marker": "UPDATED APR 2026"
+}
