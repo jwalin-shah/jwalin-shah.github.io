@@ -929,13 +929,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
    MOBILE — editorial collapses to single column under 720px
 ============================================================ */
 @media (max-width: 720px) {
+  html, body, #root { max-width: 100%; overflow-x: hidden; }
   .ed-root { padding: 16px 8px 48px; }
-  .ed-paper { padding: 28px 22px; max-width: 100%; }
+  .ed-paper { padding: 28px 22px; max-width: 100%; min-width: 0; overflow-wrap: break-word; }
   .ed-mast-title { font-size: 44px; }
   .ed-mast-row { flex-direction: column; gap: 4px; align-items: center; text-align: center; }
-  .ed-lede-h { font-size: 26px; }
+  .ed-lede-kicker, .ed-section-rule { letter-spacing: .14em; overflow-wrap: anywhere; }
+  .ed-lede-h { font-size: 26px; overflow-wrap: anywhere; }
   .ed-lede-p { column-count: 1; }
-  .ed-lede-meta { flex-wrap: wrap; }
+  .ed-lede-meta { flex-wrap: wrap; overflow-wrap: anywhere; }
   .ed-feat-grid { grid-template-columns: 1fr; }
   .ed-feat:nth-child(2n) { border-right: 1px solid #d8cfbf; }
   .ed-feat { border-right: none; }
