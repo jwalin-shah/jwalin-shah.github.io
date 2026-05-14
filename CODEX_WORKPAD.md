@@ -188,3 +188,27 @@ curl -fsS http://127.0.0.1:8765/dist/app.js
 Result: passed. The served bundle contains `UPDATED MAY 2026`, and the Chrome
 screenshot renders the first viewport with the updated marker, masthead,
 headline, contact links, and project grid visible.
+
+## WP-024 Local Validation Gate - 2026-05-14
+
+Canonical local pre-handoff command:
+
+```bash
+npm run smoke
+```
+
+`npm run smoke` now rebuilds `dist/app.js`, runs the publication validator, and
+then runs the static bundle smoke check. `npm run validate` is retained as an
+alias for the same gate so older references do not define a competing command.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed the lockfile dependencies. A follow-up
+`npm run validate` also passed and delegated to `npm run smoke`.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/4
