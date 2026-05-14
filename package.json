@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "esbuild app-entry.jsx --bundle --format=iife --outfile=dist/app.js",
-    "smoke": "npm run build && python3 scripts/validate_publication.py && python3 scripts/smoke_static_build.py",
+    "smoke": "npm run build && python3 scripts/test_publication_contract.py && python3 scripts/smoke_cli_contract.py && python3 scripts/validate_publication.py && python3 scripts/smoke_static_build.py",
     "validate": "npm run smoke"
   },
   "devDependencies": {

@@ -7,6 +7,8 @@ import sys
 import textwrap
 from pathlib import Path
 
+from publication_contract import PublicationContract, PublicationContractError
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -80,7 +82,7 @@ def run_bundle_contract() -> dict:
         fail(f"dist/app.js contract output was invalid JSON: {exc}")
 
 
-def validate_featured_project_contract(claims: dict) -> None:
+def validate_featured_project_contract(contract: PublicationContract) -> None:
     state = run_bundle_contract()
     projects = state.get("projects")
     if not isinstance(projects, list):
@@ -94,7 +96,7 @@ def validate_featured_project_contract(claims: dict) -> None:
     if not any(component.startswith("EditorialDir") for component in rendered_components):
         fail("dist/app.js render smoke did not invoke EditorialDir")
 
-    required_slugs = claims.get("required_project_slugs", [])
+    required_slugs = contract.required_project_slugs
     rendered_slugs = [project.get("slug") for project in projects if isinstance(project, dict)]
     missing = [slug for slug in required_slugs if slug not in rendered_slugs]
     if missing:
@@ -117,6 +119,11 @@ def validate_featured_project_contract(claims: dict) -> None:
 
 
 def main() -> None:
+    try:
+        contract = PublicationContract.load()
+    except PublicationContractError as exc:
+        fail(str(exc))
+
     index = (ROOT / "index.html").read_text()
     bundle = ROOT / "dist/app.js"
     if not bundle.exists():
@@ -132,16 +139,9 @@ def main() -> None:
     for marker in ["window.PROFILE", "window.PROJECTS", "window.STATS", "React.createElement", "ReactDOM.createRoot"]:
         if marker not in compiled:
             fail(f"dist/app.js is missing expected marker: {marker}")
-    claims = json.loads((ROOT / "public_claims.json").read_text())
-    for marker in [
-        claims["update_marker"],
-        claims["profile"]["email"],
-        f"https://github.com/{claims['profile']['handle']}",
-        f"https://linkedin.com/in/{claims['profile']['handle']}",
-    ]:
-        if marker not in compiled:
-            fail(f"dist/app.js is missing public claim marker: {marker}")
-    validate_featured_project_contract(claims)
+    for marker in contract.missing_compiled_public_markers(compiled):
+        fail(f"dist/app.js is missing public claim marker: {marker}")
+    validate_featured_project_contract(contract)
 
     print("static build smoke passed")
 

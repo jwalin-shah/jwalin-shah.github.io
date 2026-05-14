@@ -212,3 +212,95 @@ Result: passed after `npm ci` installed the lockfile dependencies. A follow-up
 `npm run validate` also passed and delegated to `npm run smoke`.
 
 PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/4
+
+## WP-080 Shallow Module Deepening - 2026-05-14
+
+Deepened the publication validation surface by adding
+`scripts/publication_contract.py` as the single interface for loading public
+claims, aggregating public source text, and deriving compiled public markers.
+`scripts/validate_publication.py` and `scripts/smoke_static_build.py` now use
+that interface instead of duplicating `public_claims.json` shape assumptions.
+
+Added `scripts/test_publication_contract.py` and wired it into `npm run smoke`
+so the smoke gate exercises the publication contract directly before broader
+publication and static bundle checks.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/6
+Implementation commit: 692084b044132441f9384b8da2868ba1d1951774
+Residual risk: low; this is a validation-only refactor and does not change
+the published page behavior.
+
+## WP-108 Duplicate Logic Consolidation - 2026-05-14
+
+Consolidated duplicated public-claim membership checks into
+`PublicationContract`:
+
+- `missing_required_public_links()` is now the canonical rule for required
+  links that must appear in the public source text.
+- `missing_compiled_public_markers()` is now the canonical rule for public
+  claim markers that must appear in the compiled bundle.
+
+`scripts/validate_publication.py`, `scripts/smoke_static_build.py`, and
+`scripts/test_publication_contract.py` now route through those methods.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/7
+Residual risk: low; validation-only refactor with no published page behavior
+change expected.
+
+## WP-136 CLI Smoke Contract - 2026-05-14
+
+Added a no-secret `--smoke` path to `scripts/validate_publication.py` so the
+real publication validator entrypoint exercises imports, argument parsing, and
+contract loading without running the full publication checks. Added
+`scripts/smoke_cli_contract.py` to verify the smoke success path and confirm
+bad input returns a clear nonzero argparse failure.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/8
+Residual risk: low; this changes only local validation scripts and does not
+change published page behavior.
+
+## WP-192 Error Boundary Hardening - 2026-05-14
+
+Hardened `PublicationContract` so decoded `public_claims.json` content must be
+a JSON object at the parser boundary. A top-level array now raises
+`PublicationContractError` with a deterministic message instead of flowing into
+later `.get(...)` calls and producing an implementation-shaped failure.
+
+Added a negative check to `scripts/test_publication_contract.py` for malformed
+top-level claims JSON while leaving the valid contract path unchanged.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
