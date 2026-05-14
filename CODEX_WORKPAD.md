@@ -260,3 +260,7 @@ git diff --check
 ```
 
 Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/7
+Residual risk: low; validation-only refactor with no published page behavior
+change expected.
