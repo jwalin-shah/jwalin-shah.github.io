@@ -1,13 +1,29 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 
-from publication_contract import ROOT, RUNTIME_BUNDLE_PATH, PublicationContract
+from publication_contract import PUBLICATION_BUNDLE_PATH, ROOT, RUNTIME_BUNDLE_PATH, PublicationContract
+from smoke_static_build import validate_compiled_bundle
 
 
 def fail(message: str) -> None:
     raise SystemExit(f"publication contract test failed: {message}")
+
+
+def canonical_compiled_bundle(contract: PublicationContract) -> str:
+    return "\n".join(
+        [
+            "window.PROFILE",
+            "window.PROJECTS",
+            "window.STATS",
+            "React.createElement",
+            "ReactDOM.createRoot",
+            *contract.compiled_public_markers,
+        ]
+    )
 
 
 def main() -> None:
@@ -40,6 +56,16 @@ def main() -> None:
 
     if contract.missing_compiled_public_markers("\n".join(compiled_markers)):
         fail("compiled marker membership check rejected the canonical markers")
+
+    compiled = canonical_compiled_bundle(contract)
+    validate_compiled_bundle(compiled, PUBLICATION_BUNDLE_PATH, contract, compiled)
+    with contextlib.redirect_stderr(io.StringIO()):
+        try:
+            validate_compiled_bundle(compiled, PUBLICATION_BUNDLE_PATH, contract, f"{compiled}\nnew runtime output")
+        except SystemExit:
+            pass
+        else:
+            fail("publication bundle mismatch must fail static build smoke validation")
 
     print("publication contract test passed")
 

@@ -43,6 +43,23 @@ def display_path(path: Path) -> str:
         return str(path)
 
 
+def validate_compiled_bundle(
+    compiled: str,
+    bundle: Path,
+    contract: PublicationContract,
+    runtime_compiled: str | None = None,
+) -> None:
+    if "<EditorialDir" in compiled or "type=\"text/babel\"" in compiled:
+        fail(f"{display_path(bundle)} appears to contain uncompiled JSX/Babel markers")
+    for marker in ["window.PROFILE", "window.PROJECTS", "window.STATS", "React.createElement", "ReactDOM.createRoot"]:
+        if marker not in compiled:
+            fail(f"{display_path(bundle)} is missing expected marker: {marker}")
+    for marker in contract.missing_compiled_public_markers(compiled):
+        fail(f"{display_path(bundle)} is missing public claim marker: {marker}")
+    if runtime_compiled is not None and compiled != runtime_compiled:
+        fail(f"{display_path(bundle)} does not match the current runtime build; run npm run build:publication")
+
+
 def main(argv: list[str] | None = None) -> None:
     args = parse_args(sys.argv[1:] if argv is None else argv)
 
@@ -62,15 +79,12 @@ def main(argv: list[str] | None = None) -> None:
         fail(f"index.html does not load {publication_bundle}")
     if not PUBLICATION_BUNDLE_PATH.exists():
         fail(f"missing checked-in publication fixture: {publication_bundle}")
+    publication_compiled = PUBLICATION_BUNDLE_PATH.read_text()
     if "@babel/standalone" in index or 'type="text/babel"' in index:
         fail("index.html still depends on browser Babel")
-    if "<EditorialDir" in compiled or "type=\"text/babel\"" in compiled:
-        fail(f"{display_path(bundle)} appears to contain uncompiled JSX/Babel markers")
-    for marker in ["window.PROFILE", "window.PROJECTS", "window.STATS", "React.createElement", "ReactDOM.createRoot"]:
-        if marker not in compiled:
-            fail(f"{display_path(bundle)} is missing expected marker: {marker}")
-    for marker in contract.missing_compiled_public_markers(compiled):
-        fail(f"{display_path(bundle)} is missing public claim marker: {marker}")
+
+    validate_compiled_bundle(compiled, bundle, contract)
+    validate_compiled_bundle(publication_compiled, PUBLICATION_BUNDLE_PATH, contract, compiled)
 
     print("static build smoke passed")
 
