@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -29,6 +30,15 @@ def main() -> None:
     for marker in ["window.PROFILE", "window.PROJECTS", "window.STATS", "React.createElement", "ReactDOM.createRoot"]:
         if marker not in compiled:
             fail(f"dist/app.js is missing expected marker: {marker}")
+    claims = json.loads((ROOT / "public_claims.json").read_text())
+    for marker in [
+        claims["update_marker"],
+        claims["profile"]["email"],
+        f"https://github.com/{claims['profile']['handle']}",
+        f"https://linkedin.com/in/{claims['profile']['handle']}",
+    ]:
+        if marker not in compiled:
+            fail(f"dist/app.js is missing public claim marker: {marker}")
 
     print("static build smoke passed")
 

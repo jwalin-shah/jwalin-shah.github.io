@@ -165,3 +165,26 @@ Visual inspection:
 
 - First viewport renders the masthead, headline, contact links, and project grid.
 - No blank shell, missing bundle, or obvious text overlap was visible.
+
+## Static Bundle Claim Sync Follow-Up - 2026-05-14
+
+Gemini secondary review of merged PR #2 found no blockers, but recommended
+refreshing the public update marker from April to May 2026 and checking that
+compiled `dist/app.js` includes public claim markers.
+
+Validation:
+
+```bash
+npm run validate
+git diff --check
+curl -fsS http://127.0.0.1:8765/
+curl -fsS http://127.0.0.1:8765/dist/app.js
+'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' \
+  --headless=new --disable-gpu --no-first-run --no-default-browser-check \
+  --screenshot=/tmp/profile-home-2026-05-14.png --window-size=1280,1200 \
+  http://127.0.0.1:8765/
+```
+
+Result: passed. The served bundle contains `UPDATED MAY 2026`, and the Chrome
+screenshot renders the first viewport with the updated marker, masthead,
+headline, contact links, and project grid visible.
