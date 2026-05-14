@@ -286,6 +286,35 @@ PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/8
 Residual risk: low; this changes only local validation scripts and does not
 change published page behavior.
 
+## WP-164 Fixture Runtime Separation - 2026-05-14
+
+Separated local runtime output from the checked-in publication fixture:
+
+- `npm run build` now writes the smoke/runtime bundle to
+  `.runtime/dist/app.js`, which is ignored by git.
+- `npm run build:publication` is the explicit command for refreshing the
+  tracked `dist/app.js` publication fixture.
+- `scripts/smoke_static_build.py` validates the local runtime bundle while
+  still confirming `index.html` references the checked-in publication fixture.
+- `scripts/test_publication_contract.py` asserts the default build output,
+  publication fixture command, and `.runtime/` ignore rule.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/9
+Initial implementation commit: c49c92fbdfe545cad3ff5e04ea11938e585ed00a
+Blockers: none.
+
+Residual risk: low; this changes local build defaults and validation only. The
+existing tracked `dist/app.js` fixture is preserved.
+
 ## WP-192 Error Boundary Hardening - 2026-05-14
 
 Hardened `PublicationContract` so decoded `public_claims.json` content must be
