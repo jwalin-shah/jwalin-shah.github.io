@@ -264,3 +264,24 @@ Result: passed after `npm ci` installed lockfile dependencies.
 PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/7
 Residual risk: low; validation-only refactor with no published page behavior
 change expected.
+
+## WP-136 CLI Smoke Contract - 2026-05-14
+
+Added a no-secret `--smoke` path to `scripts/validate_publication.py` so the
+real publication validator entrypoint exercises imports, argument parsing, and
+contract loading without running the full publication checks. Added
+`scripts/smoke_cli_contract.py` to verify the smoke success path and confirm
+bad input returns a clear nonzero argparse failure.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/8
+Residual risk: low; this changes only local validation scripts and does not
+change published page behavior.
