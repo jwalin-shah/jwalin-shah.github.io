@@ -210,3 +210,5 @@ git diff --check
 
 Result: passed after `npm ci` installed the lockfile dependencies. A follow-up
 `npm run validate` also passed and delegated to `npm run smoke`.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/4
