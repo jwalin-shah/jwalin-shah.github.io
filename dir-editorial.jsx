@@ -14,7 +14,7 @@ const EditorialDir = () => {
         {/* Masthead — research-lab voice, no fake issue numbers */}
         <header className="ed-masthead">
           <div className="ed-mast-row">
-            <span className="ed-mast-vol">EST. 2024 · UPDATED APR 2026</span>
+            <span className="ed-mast-vol">EST. 2024 · UPDATED MAY 2026</span>
             <span className="ed-mast-loc">FILED FROM SF</span>
           </div>
           <h1 className="ed-mast-title">Jwalin Shah</h1>
