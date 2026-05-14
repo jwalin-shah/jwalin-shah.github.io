@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import json
 import sys
 from pathlib import Path
+
+from publication_contract import PublicationContract, PublicationContractError
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +16,11 @@ def fail(message: str) -> None:
 
 
 def main() -> None:
+    try:
+        contract = PublicationContract.load()
+    except PublicationContractError as exc:
+        fail(str(exc))
+
     index = (ROOT / "index.html").read_text()
     bundle = ROOT / "dist/app.js"
     if not bundle.exists():
@@ -30,13 +36,7 @@ def main() -> None:
     for marker in ["window.PROFILE", "window.PROJECTS", "window.STATS", "React.createElement", "ReactDOM.createRoot"]:
         if marker not in compiled:
             fail(f"dist/app.js is missing expected marker: {marker}")
-    claims = json.loads((ROOT / "public_claims.json").read_text())
-    for marker in [
-        claims["update_marker"],
-        claims["profile"]["email"],
-        f"https://github.com/{claims['profile']['handle']}",
-        f"https://linkedin.com/in/{claims['profile']['handle']}",
-    ]:
+    for marker in contract.compiled_public_markers:
         if marker not in compiled:
             fail(f"dist/app.js is missing public claim marker: {marker}")
 
