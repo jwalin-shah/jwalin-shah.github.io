@@ -238,3 +238,29 @@ PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/6
 Implementation commit: 692084b044132441f9384b8da2868ba1d1951774
 Residual risk: low; this is a validation-only refactor and does not change
 the published page behavior.
+
+## WP-108 Duplicate Logic Consolidation - 2026-05-14
+
+Consolidated duplicated public-claim membership checks into
+`PublicationContract`:
+
+- `missing_required_public_links()` is now the canonical rule for required
+  links that must appear in the public source text.
+- `missing_compiled_public_markers()` is now the canonical rule for public
+  claim markers that must appear in the compiled bundle.
+
+`scripts/validate_publication.py`, `scripts/smoke_static_build.py`, and
+`scripts/test_publication_contract.py` now route through those methods.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/7
+Residual risk: low; validation-only refactor with no published page behavior
+change expected.

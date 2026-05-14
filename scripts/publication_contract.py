@@ -84,3 +84,10 @@ class PublicationContract:
             f"https://github.com/{handle}",
             f"https://linkedin.com/in/{handle}",
         ]
+
+    def missing_required_public_links(self) -> list[str]:
+        source_text = self.public_source_text
+        return [value for value in self.required_links if value not in source_text]
+
+    def missing_compiled_public_markers(self, compiled_text: str) -> list[str]:
+        return [marker for marker in self.compiled_public_markers if marker not in compiled_text]
