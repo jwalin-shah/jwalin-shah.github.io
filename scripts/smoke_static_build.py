@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
+import textwrap
 from pathlib import Path
 
 
@@ -12,6 +14,75 @@ ROOT = Path(__file__).resolve().parents[1]
 def fail(message: str) -> None:
     print(f"static build smoke failed: {message}", file=sys.stderr)
     raise SystemExit(1)
+
+
+def run_bundle_contract() -> dict:
+    script = textwrap.dedent(
+        """
+        global.window = global;
+        global.document = { getElementById: () => ({}) };
+        global.React = {
+          createElement: (type, props, ...children) => ({ type, props, children }),
+          useEffect: () => {},
+          useState: (initial) => [initial, () => {}],
+        };
+        global.ReactDOM = { createRoot: () => ({ render: () => {} }) };
+
+        require("./dist/app.js");
+
+        process.stdout.write(JSON.stringify({
+          profile: global.PROFILE,
+          projects: global.PROJECTS,
+          stats: global.STATS,
+        }));
+        """
+    )
+    try:
+        result = subprocess.run(
+            ["node", "-e", script],
+            cwd=ROOT,
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+    except FileNotFoundError:
+        fail("node is not available to execute dist/app.js")
+    except subprocess.CalledProcessError as exc:
+        detail = (exc.stderr or exc.stdout or "").strip()
+        fail(f"dist/app.js did not execute cleanly under the public bundle contract: {detail}")
+
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        fail(f"dist/app.js contract output was invalid JSON: {exc}")
+
+
+def validate_featured_project_contract(claims: dict) -> None:
+    state = run_bundle_contract()
+    projects = state.get("projects")
+    if not isinstance(projects, list):
+        fail("dist/app.js did not expose window.PROJECTS as a list")
+
+    required_slugs = claims.get("required_project_slugs", [])
+    rendered_slugs = [project.get("slug") for project in projects if isinstance(project, dict)]
+    missing = [slug for slug in required_slugs if slug not in rendered_slugs]
+    if missing:
+        fail(f"dist/app.js is missing required project data: {', '.join(missing)}")
+
+    featured = projects[:4]
+    if len(featured) < 4:
+        fail("dist/app.js must expose at least four featured projects")
+    for project in featured:
+        slug = project.get("slug", "<missing slug>")
+        repo = project.get("repo", "")
+        if repo.count("/") != 1 or any(not part for part in repo.split("/")):
+            fail(f"featured project {slug} has an invalid GitHub repo value: {repo}")
+        for field in ["title", "kicker", "blurb", "longBlurb"]:
+            if not project.get(field):
+                fail(f"featured project {slug} is missing modal field: {field}")
+        for field in ["metrics", "findings", "stack"]:
+            if not project.get(field):
+                fail(f"featured project {slug} is missing modal list: {field}")
 
 
 def main() -> None:
@@ -39,6 +110,7 @@ def main() -> None:
     ]:
         if marker not in compiled:
             fail(f"dist/app.js is missing public claim marker: {marker}")
+    validate_featured_project_contract(claims)
 
     print("static build smoke passed")
 
