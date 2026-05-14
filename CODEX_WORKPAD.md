@@ -285,3 +285,22 @@ Result: passed after `npm ci` installed lockfile dependencies.
 PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/8
 Residual risk: low; this changes only local validation scripts and does not
 change published page behavior.
+
+## WP-192 Error Boundary Hardening - 2026-05-14
+
+Hardened `PublicationContract` so decoded `public_claims.json` content must be
+a JSON object at the parser boundary. A top-level array now raises
+`PublicationContractError` with a deterministic message instead of flowing into
+later `.get(...)` calls and producing an implementation-shaped failure.
+
+Added a negative check to `scripts/test_publication_contract.py` for malformed
+top-level claims JSON while leaving the valid contract path unchanged.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.

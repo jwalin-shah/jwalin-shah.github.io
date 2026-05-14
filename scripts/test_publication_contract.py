@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-from publication_contract import PublicationContract
+from publication_contract import PublicationContract, PublicationContractError
 
 
 def fail(message: str) -> None:
     raise SystemExit(f"publication contract test failed: {message}")
+
+
+def expect_contract_error(message: str, action) -> None:
+    try:
+        action()
+    except PublicationContractError as exc:
+        if message not in str(exc):
+            fail(f"expected contract error containing {message!r}, got {exc}")
+        return
+    fail(f"expected contract error containing {message!r}")
 
 
 def main() -> None:
@@ -28,6 +38,11 @@ def main() -> None:
 
     if contract.missing_compiled_public_markers("\n".join(compiled_markers)):
         fail("compiled marker membership check rejected the canonical markers")
+
+    expect_contract_error(
+        "public_claims.json must contain a JSON object",
+        lambda: PublicationContract.from_json_text('["not", "a", "claims", "object"]'),
+    )
 
     print("publication contract test passed")
 
