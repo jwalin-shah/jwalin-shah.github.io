@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -61,11 +62,27 @@ def validate_data_contract(contract: PublicationContract) -> None:
         fail("dir-editorial.jsx masthead is missing the public update marker")
 
 
-def main() -> None:
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Validate the static portfolio publication contract.")
+    parser.add_argument(
+        "--smoke",
+        action="store_true",
+        help="exercise imports, argument parsing, and contract loading without running full publication checks",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = parse_args(sys.argv[1:] if argv is None else argv)
+
     try:
         contract = PublicationContract.load()
     except PublicationContractError as exc:
         fail(str(exc))
+
+    if args.smoke:
+        print("publication CLI smoke passed")
+        return
 
     validate_assets()
     validate_public_links(contract)
