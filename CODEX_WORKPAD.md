@@ -282,5 +282,6 @@ git diff --check
 
 Result: passed after `npm ci` installed lockfile dependencies.
 
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/8
 Residual risk: low; this changes only local validation scripts and does not
 change published page behavior.
