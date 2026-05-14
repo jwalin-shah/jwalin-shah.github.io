@@ -35,9 +35,8 @@ def validate_assets() -> None:
 
 
 def validate_public_links(contract: PublicationContract) -> None:
-    for value in contract.required_links:
-        if value not in contract.public_source_text:
-            fail(f"missing public link or contact value: {value}")
+    for value in contract.missing_required_public_links():
+        fail(f"missing public link or contact value: {value}")
 
 
 def validate_data_contract(contract: PublicationContract) -> None:

@@ -36,9 +36,8 @@ def main() -> None:
     for marker in ["window.PROFILE", "window.PROJECTS", "window.STATS", "React.createElement", "ReactDOM.createRoot"]:
         if marker not in compiled:
             fail(f"dist/app.js is missing expected marker: {marker}")
-    for marker in contract.compiled_public_markers:
-        if marker not in compiled:
-            fail(f"dist/app.js is missing public claim marker: {marker}")
+    for marker in contract.missing_compiled_public_markers(compiled):
+        fail(f"dist/app.js is missing public claim marker: {marker}")
 
     print("static build smoke passed")
 
