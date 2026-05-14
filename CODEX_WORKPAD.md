@@ -212,3 +212,29 @@ Result: passed after `npm ci` installed the lockfile dependencies. A follow-up
 `npm run validate` also passed and delegated to `npm run smoke`.
 
 PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/4
+
+## WP-080 Shallow Module Deepening - 2026-05-14
+
+Deepened the publication validation surface by adding
+`scripts/publication_contract.py` as the single interface for loading public
+claims, aggregating public source text, and deriving compiled public markers.
+`scripts/validate_publication.py` and `scripts/smoke_static_build.py` now use
+that interface instead of duplicating `public_claims.json` shape assumptions.
+
+Added `scripts/test_publication_contract.py` and wired it into `npm run smoke`
+so the smoke gate exercises the publication contract directly before broader
+publication and static bundle checks.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.
+
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/6
+Implementation commit: 692084b044132441f9384b8da2868ba1d1951774
+Residual risk: low; this is a validation-only refactor and does not change
+the published page behavior.
