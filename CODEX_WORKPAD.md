@@ -308,5 +308,9 @@ git diff --check
 
 Result: passed after `npm ci` installed lockfile dependencies.
 
+PR: https://github.com/jwalin-shah/jwalin-shah.github.io/pull/9
+Initial implementation commit: c49c92fbdfe545cad3ff5e04ea11938e585ed00a
+Blockers: none.
+
 Residual risk: low; this changes local build defaults and validation only. The
 existing tracked `dist/app.js` fixture is preserved.
