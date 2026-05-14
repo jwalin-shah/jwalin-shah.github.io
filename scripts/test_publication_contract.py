@@ -5,7 +5,13 @@ import contextlib
 import io
 import json
 
-from publication_contract import PUBLICATION_BUNDLE_PATH, ROOT, RUNTIME_BUNDLE_PATH, PublicationContract
+from publication_contract import (
+    PUBLICATION_BUNDLE_PATH,
+    ROOT,
+    RUNTIME_BUNDLE_PATH,
+    PublicationContract,
+    PublicationContractError,
+)
 from smoke_static_build import validate_compiled_bundle
 
 
@@ -24,6 +30,16 @@ def canonical_compiled_bundle(contract: PublicationContract) -> str:
             *contract.compiled_public_markers,
         ]
     )
+
+
+def expect_contract_error(message: str, action) -> None:
+    try:
+        action()
+    except PublicationContractError as exc:
+        if message not in str(exc):
+            fail(f"expected contract error containing {message!r}, got {exc}")
+        return
+    fail(f"expected contract error containing {message!r}")
 
 
 def main() -> None:
@@ -66,6 +82,11 @@ def main() -> None:
             pass
         else:
             fail("publication bundle mismatch must fail static build smoke validation")
+
+    expect_contract_error(
+        "public_claims.json must contain a JSON object",
+        lambda: PublicationContract.from_json_text('["not", "a", "claims", "object"]'),
+    )
 
     print("publication contract test passed")
 

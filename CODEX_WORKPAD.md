@@ -314,3 +314,22 @@ Blockers: none.
 
 Residual risk: low; this changes local build defaults and validation only. The
 existing tracked `dist/app.js` fixture is preserved.
+
+## WP-192 Error Boundary Hardening - 2026-05-14
+
+Hardened `PublicationContract` so decoded `public_claims.json` content must be
+a JSON object at the parser boundary. A top-level array now raises
+`PublicationContractError` with a deterministic message instead of flowing into
+later `.get(...)` calls and producing an implementation-shaped failure.
+
+Added a negative check to `scripts/test_publication_contract.py` for malformed
+top-level claims JSON while leaving the valid contract path unchanged.
+
+Validation:
+
+```bash
+npm run smoke
+git diff --check
+```
+
+Result: passed after `npm ci` installed lockfile dependencies.

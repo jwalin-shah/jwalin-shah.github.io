@@ -41,14 +41,23 @@ def _require_nonempty_string(claims: dict[str, Any], key: str) -> str:
 class PublicationContract:
     claims: dict[str, Any]
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.claims, dict):
+            raise PublicationContractError("public_claims.json must contain a JSON object")
+
+    @classmethod
+    def from_json_text(cls, text: str) -> "PublicationContract":
+        try:
+            return cls(json.loads(text))
+        except json.JSONDecodeError as exc:
+            raise PublicationContractError(f"public_claims.json is invalid JSON: {exc}") from exc
+
     @classmethod
     def load(cls) -> "PublicationContract":
         try:
-            return cls(json.loads(CLAIMS_PATH.read_text()))
+            return cls.from_json_text(CLAIMS_PATH.read_text())
         except FileNotFoundError as exc:
             raise PublicationContractError("missing public_claims.json") from exc
-        except json.JSONDecodeError as exc:
-            raise PublicationContractError(f"public_claims.json is invalid JSON: {exc}") from exc
 
     @property
     def required_links(self) -> list[str]:
