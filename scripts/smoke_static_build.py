@@ -21,12 +21,34 @@ def run_bundle_contract() -> dict:
         """
         global.window = global;
         global.document = { getElementById: () => ({}) };
+        global.__renderedFunctionComponents = [];
+
+        const renderElement = (node) => {
+          if (Array.isArray(node)) {
+            node.forEach(renderElement);
+            return;
+          }
+          if (!node || typeof node !== "object") {
+            return;
+          }
+          if (typeof node.type === "function") {
+            global.__renderedFunctionComponents.push(node.type.name || "<anonymous>");
+            renderElement(node.type({ ...(node.props || {}), children: node.children }));
+            return;
+          }
+          renderElement(node.children);
+        };
+
         global.React = {
-          createElement: (type, props, ...children) => ({ type, props, children }),
+          createElement: (type, props, ...children) => ({
+            type,
+            props: { ...(props || {}), children },
+            children,
+          }),
           useEffect: () => {},
           useState: (initial) => [initial, () => {}],
         };
-        global.ReactDOM = { createRoot: () => ({ render: () => {} }) };
+        global.ReactDOM = { createRoot: () => ({ render: renderElement }) };
 
         require("./dist/app.js");
 
@@ -34,6 +56,7 @@ def run_bundle_contract() -> dict:
           profile: global.PROFILE,
           projects: global.PROJECTS,
           stats: global.STATS,
+          renderedFunctionComponents: global.__renderedFunctionComponents,
         }));
         """
     )
@@ -62,6 +85,14 @@ def validate_featured_project_contract(claims: dict) -> None:
     projects = state.get("projects")
     if not isinstance(projects, list):
         fail("dist/app.js did not expose window.PROJECTS as a list")
+
+    rendered_components = state.get("renderedFunctionComponents")
+    if not isinstance(rendered_components, list):
+        fail("dist/app.js render smoke did not report invoked function components")
+    if "App" not in rendered_components:
+        fail("dist/app.js render smoke did not invoke App")
+    if not any(component.startswith("EditorialDir") for component in rendered_components):
+        fail("dist/app.js render smoke did not invoke EditorialDir")
 
     required_slugs = claims.get("required_project_slugs", [])
     rendered_slugs = [project.get("slug") for project in projects if isinstance(project, dict)]
