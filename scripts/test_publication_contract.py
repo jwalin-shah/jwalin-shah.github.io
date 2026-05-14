@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-from publication_contract import PublicationContract
+import json
+
+from publication_contract import ROOT, RUNTIME_BUNDLE_PATH, PublicationContract
 
 
 def fail(message: str) -> None:
@@ -10,6 +12,16 @@ def fail(message: str) -> None:
 
 def main() -> None:
     contract = PublicationContract.load()
+    package = json.loads((ROOT / "package.json").read_text())
+    scripts = package.get("scripts", {})
+
+    runtime_bundle = RUNTIME_BUNDLE_PATH.relative_to(ROOT).as_posix()
+    if runtime_bundle not in scripts.get("build", ""):
+        fail(f"npm run build must write to ignored runtime bundle: {runtime_bundle}")
+    if "dist/app.js" not in scripts.get("build:publication", ""):
+        fail("npm run build:publication must preserve the tracked publication bundle path")
+    if ".runtime/" not in (ROOT / ".gitignore").read_text():
+        fail(".gitignore must ignore local runtime outputs")
 
     for value in contract.missing_required_public_links():
         fail(f"public source text is missing required link: {value}")

@@ -8,6 +8,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CLAIMS_PATH = ROOT / "public_claims.json"
+PUBLICATION_BUNDLE_PATH = ROOT / "dist" / "app.js"
+RUNTIME_BUNDLE_PATH = ROOT / ".runtime" / "dist" / "app.js"
 PUBLIC_SOURCE_PATHS = ("index.html", "data.jsx", "dir-editorial.jsx")
 
 
