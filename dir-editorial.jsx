@@ -104,7 +104,7 @@ const EditorialDir = () => {
                 { from: "bridge", line: "Workers must not certify their own outputs: fresh-checkout verification + fail-closed gates." },
                 { from: "officeqa-arena", line: "Evidence selection caused 48% of failures; correctly grounded Python had 0% arithmetic errors." },
                 { from: "voice-engine", line: "348/349 tests pass; one isolated CoreML OS regression is stated, not hidden." },
-                { from: "jarvis", line: "0.42s mean / Hit@5 0.88 / 96.2% hallucination-gate — exact local-agent gates beat vibes." },
+                { from: "skild", line: "Operational reliability under Series C demo pressure is a different failure mode than model hallucination — and it still counts." },
                 { from: "btw / livelm", line: "ok/partial/stale/miss routing at ~11 ms warm p50: abstain instead of inventing stale answers." },
               ].map((row, i) => (
                 <tr key={i}>
