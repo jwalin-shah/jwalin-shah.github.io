@@ -12,18 +12,19 @@
   ],
   "required_project_slugs": [
     "openhuman",
-    "bridge",
+    "voice-engine",
     "officeqa-arena",
-    "voice-engine"
+    "bridge"
   ],
   "update_marker": "UPDATED AUG 2026",
   "positioning": {
-    "title": "AI Systems Engineer",
+    "title": "Reliable agent systems, measured end to end",
     "pillars": [
-      "Agent Reliability",
-      "Evaluation",
-      "Local Inference"
-    ],
-    "source_of_truth": "RESUME_SOURCE_OF_TRUTH.md"
+      "orchestration",
+      "verification",
+      "evaluation",
+      "memory",
+      "local inference"
+    ]
   }
 }
