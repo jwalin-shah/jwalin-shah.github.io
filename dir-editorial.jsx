@@ -20,13 +20,13 @@ const EditorialDir = () => {
           <h1 className="ed-mast-title">Jwalin Shah</h1>
           <div className="ed-mast-rule" />
           <div className="ed-mast-sub">
-            Agent reliability, evaluation, and local inference — with the receipts.
+            Reliable agent systems, measured end to end — with the receipts.
           </div>
         </header>
 
         {/* Lede */}
         <section className="ed-lede">
-          <div className="ed-lede-kicker">AI SYSTEMS ENGINEER · OPEN TO ROLES &amp; COLLABS</div>
+          <div className="ed-lede-kicker">RELIABLE AGENT SYSTEMS · OPEN TO ROLES &amp; COLLABS</div>
           <h2 className="ed-lede-h">
             Systems that <em>constrain, observe,</em> and <em>verify</em> probabilistic agents
             — so success is measured, not claimed.
