@@ -2,3 +2,6 @@
 /.cocoindex_code/
 .runtime/
 node_modules/
+.tldr/
+__pycache__/
+.runtime/

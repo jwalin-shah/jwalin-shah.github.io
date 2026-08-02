@@ -11,12 +11,12 @@
     "jwalinshah13@gmail.com"
   ],
   "required_project_slugs": [
-    "officeqa-arena",
     "openhuman",
+    "voice-engine",
     "tensor-logic",
-    "jarvis",
-    "inbox",
-    "robo-replan"
+    "officeqa-arena",
+    "bridge",
+    "inbox"
   ],
-  "update_marker": "UPDATED MAY 2026"
+  "update_marker": "UPDATED AUG 2026"
 }

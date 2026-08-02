@@ -14,29 +14,29 @@ const EditorialDir = () => {
         {/* Masthead — research-lab voice, no fake issue numbers */}
         <header className="ed-masthead">
           <div className="ed-mast-row">
-            <span className="ed-mast-vol">EST. 2024 · UPDATED MAY 2026</span>
-            <span className="ed-mast-loc">FILED FROM SF</span>
+            <span className="ed-mast-vol">EST. 2024 · UPDATED AUG 2026</span>
+            <span className="ed-mast-loc">FILED FROM SF BAY</span>
           </div>
           <h1 className="ed-mast-title">Jwalin Shah</h1>
           <div className="ed-mast-rule" />
           <div className="ed-mast-sub">
-            A working notebook of evaluation, reliability, and tool-augmented reasoning.
+            Agent infrastructure, evaluation, and local-first systems — with the receipts.
           </div>
         </header>
 
         {/* Lede */}
         <section className="ed-lede">
-          <div className="ed-lede-kicker">AI SYSTEMS ENGINEER · OPEN TO RESEARCH COLLABS</div>
+          <div className="ed-lede-kicker">AI SYSTEMS ENGINEER · OPEN TO ROLES &amp; COLLABS</div>
           <h2 className="ed-lede-h">
-            Building systems that <em>measure, diagnose,</em> and <em>improve</em> LLM behavior
-            — and learning, in public, from the ones that fail.
+            Systems that <em>constrain, observe,</em> and <em>verify</em> probabilistic agents
+            — so success is measured, not claimed.
           </h2>
           <p className="ed-lede-p">
-            <span className="ed-dropcap">M</span>
-            ost of the work here is about telemetry that surfaces real failure modes — not
-            aggregate scores — across grounded reasoning, deterministic computation, and
-            on-device inference. This page collects the projects, the numbers, and the things
-            that didn&rsquo;t pan out. Everything is open source.
+            <span className="ed-dropcap">I</span>
+            own the memory core for OpenHuman, ran robotics data ops at Skild through a $1B
+            Series C, and build evaluation harnesses that force tool-using agents to abstain
+            when evidence is missing. The through-line: isolation, contracts, verification,
+            and failure-mode measurement around models that otherwise invent their own success.
           </p>
           <div className="ed-lede-meta">
             <a href={`mailto:${email}`}>{email}</a>
@@ -71,9 +71,13 @@ const EditorialDir = () => {
                 </div>
                 <div className="ed-feat-actions">
                   <button className="ed-feat-read" onClick={() => setOpenIdx(i)}>read the report ⟶</button>
-                  <a className="ed-feat-repo" href={`https://github.com/${p.repo}`} target="_blank" rel="noopener">
-                    github ↗
-                  </a>
+                  {p.repo ? (
+                    <a className="ed-feat-repo" href={`https://github.com/${p.repo}`} target="_blank" rel="noopener">
+                      github ↗
+                    </a>
+                  ) : (
+                    <span className="ed-feat-repo">private · ask me</span>
+                  )}
                 </div>
               </article>
             ))}
@@ -96,13 +100,12 @@ const EditorialDir = () => {
             </thead>
             <tbody>
               {[
-                { from: "officeqa-arena", line: "Shell `grep` on raw TXT (28KB) outperformed an 11GB SQLite + 10-component pipeline." },
-                { from: "officeqa-arena", line: "48% of failures = wrong table/row/column extraction. 0% of correctly-grounded answers had arithmetic errors." },
-                { from: "officeqa-arena", line: '"Review your intern\'s work" framing beat "verify your answer" by +13 points.' },
-                { from: "tensor-logic", line: "A 3-scalar TL recurrence beats a 71M-param MLP on transitive closure by 4+ orders of magnitude." },
-                { from: "tensor-logic", line: "TL is parameter-efficient when a closed-form operator exists; it cannot magic one into existence (XOR, parity, control flow)." },
-                { from: "jarvis", line: "Template-first + generation fallback drops cost and hallucination risk vs pure-generation pipelines." },
-                { from: "jarvis", line: "Local-first inference gives more predictable p95 latency than cloud-first under realistic load." },
+                { from: "openhuman", line: "On-device personal memory only compounds if ingest is correct before embed — hybrid FTS + vectors beats either alone." },
+                { from: "bridge", line: "Detecting a scope violation is useless if the gate still passes. Agents must not certify their own success." },
+                { from: "voice-engine", line: "Near-identical WER can hide a 14× latency cliff — moonshine-tiny beat a 2.5B model on device for real-time dictation." },
+                { from: "officeqa-arena", line: "Shell `grep` on raw TXT outperformed an 11GB SQLite + 10-component pipeline. Retrieval errors dominated failures." },
+                { from: "tensor-logic", line: "A 3-scalar TL recurrence beats a 71M-param MLP on transitive closure; parity/XOR remains unlearnable — limits documented." },
+                { from: "btw / livelm", line: "Explicit hit/partial/stale/miss routing: abstain when evidence is missing instead of inventing a plausible answer." },
               ].map((row, i) => (
                 <tr key={i}>
                   <td className="ed-td-no">{String(i + 1).padStart(2, "0")}</td>
@@ -202,9 +205,11 @@ const EditorialDir = () => {
                   <tr key={i}>
                     <td className="ed-td-date">{a.date}</td>
                     <td className="ed-td-from">
-                      <a href={`https://github.com/jwalin-shah/${a.repo}`} target="_blank" rel="noopener">
-                        {a.repo}
-                      </a>
+                      {a.href ? (
+                        <a href={a.href} target="_blank" rel="noopener">{a.repo}</a>
+                      ) : (
+                        <span>{a.repo}</span>
+                      )}
                     </td>
                     <td>{a.what}</td>
                   </tr>
@@ -224,9 +229,9 @@ const EditorialDir = () => {
             <div className="ed-cta-text">
               <h3 className="ed-cta-h">What I&rsquo;m looking for</h3>
               <ul className="ed-cta-list">
-                <li>Research collaborations on grounded reasoning, evaluation, and reliability.</li>
-                <li>Eval and reliability work for teams shipping LLM-backed products.</li>
-                <li>On-device / privacy-first AI projects, especially on Apple Silicon.</li>
+                <li>Agent infrastructure / sandboxing / verification roles.</li>
+                <li>Evaluation &amp; reliability for teams shipping tool-using LLM products.</li>
+                <li>Local-first / on-device AI (Apple Silicon, personal memory, privacy).</li>
               </ul>
             </div>
             <div className="ed-cta-actions">
@@ -299,9 +304,13 @@ const ProjectModal = ({ project, onClose }) => {
         )}
 
         <div className="ed-modal-foot">
-          <a href={`https://github.com/${project.repo}`} target="_blank" rel="noopener">
-            github.com/{project.repo} ↗
-          </a>
+          {project.repo ? (
+            <a href={`https://github.com/${project.repo}`} target="_blank" rel="noopener">
+              github.com/{project.repo} ↗
+            </a>
+          ) : (
+            <span>private · walkthrough on request</span>
+          )}
           <span>{project.stack.join(" · ")}</span>
         </div>
       </div>
