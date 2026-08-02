@@ -110,27 +110,7 @@ window.PROJECTS = [
     stack: ["Swift", "CoreML", "MLX"],
     repo: "jwalin-shah/voice-engine-swift",
     color: "cyan",
-  },
-  {
-    slug: "jarvis",
-    title: "Jarvis",
-    kicker: "Local-first personal agent · archived",
-    blurb: "8 GB M2 Air: 0.42 s mean / 1.15 s p95, Hit@5 0.88, 96.2% hallucination-gate pass across 37 configs — precursor to OpenHuman memory work.",
-    longBlurb: "Privacy-first local assistant with measured latency, retrieval, and hallucination gates. First project to cut when a tailored résumé needs space.",
-    metrics: [
-      { k: "mean", v: "0.42s" },
-      { k: "p95", v: "1.15s" },
-      { k: "Hit@5", v: "0.88" },
-      { k: "halluc. gate", v: "96.2%" },
-    ],
-    findings: [
-      "Exact gates beat vibes for local agents",
-      "Precursor patterns later informed OpenHuman work",
-    ],
-    stack: ["MLX", "sqlite-vec", "Python"],
-    repo: "jwalin-shah/jarvis-ai-assistant",
-    color: "lime",
-  },
+  }
 ];
 
 window.STATS = {
