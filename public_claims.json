@@ -14,13 +14,13 @@
     "openhuman",
     "bridge",
     "officeqa-arena",
-    "knowledge-engine",
     "voice-engine",
-    "tensor-logic"
+    "jarvis"
   ],
   "update_marker": "UPDATED AUG 2026",
   "positioning": {
-    "title": "AI Systems & Reliability Engineer",
-    "pillars": ["Agent Evaluation", "Grounded Retrieval", "Verification Infrastructure"]
+    "title": "AI Systems Engineer",
+    "pillars": ["Agent Reliability", "Evaluation", "Local Inference"],
+    "source_of_truth": "RESUME_SOURCE_OF_TRUTH.md"
   }
 }

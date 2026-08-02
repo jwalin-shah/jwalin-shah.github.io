@@ -20,23 +20,23 @@ const EditorialDir = () => {
           <h1 className="ed-mast-title">Jwalin Shah</h1>
           <div className="ed-mast-rule" />
           <div className="ed-mast-sub">
-            Agent evaluation, grounded retrieval, and verification infrastructure — with the receipts.
+            Agent reliability, evaluation, and local inference — with the receipts.
           </div>
         </header>
 
         {/* Lede */}
         <section className="ed-lede">
-          <div className="ed-lede-kicker">AI SYSTEMS &amp; RELIABILITY ENGINEER · OPEN TO ROLES &amp; COLLABS</div>
+          <div className="ed-lede-kicker">AI SYSTEMS ENGINEER · OPEN TO ROLES &amp; COLLABS</div>
           <h2 className="ed-lede-h">
             Systems that <em>constrain, observe,</em> and <em>verify</em> probabilistic agents
             — so success is measured, not claimed.
           </h2>
           <p className="ed-lede-p">
             <span className="ed-dropcap">I</span>
-            own the memory core for OpenHuman, ran robotics data ops at Skild through a $1B
-            Series C, and build verification + evaluation systems (Bridge, LiveLM, OfficeQA)
-            that force agents to abstain or fail closed when evidence is missing. The through-line:
-            isolation, contracts, independent checks, and failure-mode measurement.
+            land merged upstream work on OpenHuman, build LiveLM retrieval that abstains on
+            stale evidence, and ship verification runtimes (Bridge) plus measured eval systems
+            (OfficeQA, Voice, Jarvis). The through-line: deterministic systems around
+            nondeterministic models.
           </p>
           <div className="ed-lede-meta">
             <a href={`mailto:${email}`}>{email}</a>
@@ -100,12 +100,12 @@ const EditorialDir = () => {
             </thead>
             <tbody>
               {[
-                { from: "openhuman", line: "On-device personal memory only compounds if ingest is correct before embed — hybrid FTS + vectors beats either alone." },
-                { from: "bridge", line: "Detecting a scope violation is useless if the gate still passes. Agents must not certify their own success." },
-                { from: "knowledge-engine", line: "Disk ↔ graph parity is a gate: indexing that drifts silently is not a retrieval substrate." },
-                { from: "officeqa-arena", line: "Retrieval and tool selection — not model arithmetic — drove most grounded-QA failures." },
-                { from: "voice-engine", line: "Near-identical WER can hide a 14× latency cliff — measure RTF before shipping the bigger model." },
-                { from: "btw / livelm", line: "Explicit hit/partial/stale/miss routing: abstain when evidence is missing instead of inventing a plausible answer." },
+                { from: "openhuman", line: "Count merged PRs (69), not branch commits — and never claim unmerged personal-index branches as shipped." },
+                { from: "bridge", line: "Workers must not certify their own outputs: fresh-checkout verification + fail-closed gates." },
+                { from: "officeqa-arena", line: "Evidence selection caused 48% of failures; correctly grounded Python had 0% arithmetic errors." },
+                { from: "voice-engine", line: "348/349 tests pass; one isolated CoreML OS regression is stated, not hidden." },
+                { from: "jarvis", line: "0.42s mean / Hit@5 0.88 / 96.2% hallucination-gate — exact local-agent gates beat vibes." },
+                { from: "btw / livelm", line: "ok/partial/stale/miss routing at ~11 ms warm p50: abstain instead of inventing stale answers." },
               ].map((row, i) => (
                 <tr key={i}>
                   <td className="ed-td-no">{String(i + 1).padStart(2, "0")}</td>

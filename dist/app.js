@@ -5,43 +5,43 @@
     handle: "jwalin-shah",
     email: "jwalinshah13@gmail.com",
     linkedin: "linkedin.com/in/jwalin-shah",
-    tagline: "AI Systems & Reliability Engineer \u2014 Agent Evaluation \xB7 Grounded Retrieval \xB7 Verification Infrastructure",
+    tagline: "AI Systems Engineer \u2014 Agent Reliability \xB7 Evaluation \xB7 Local Inference",
     oneliner: "Builds systems that constrain, observe, and verify probabilistic agents under real-world constraints.",
     location: "San Francisco Bay Area",
     status: "open to roles & research collabs",
     background: [
-      { org: "OpenHuman (tinyhumansai)", role: "Core Contributor", note: "life_capture / curated_memory \u2014 on-device personal KB for a 35k+ star local-first agent" },
-      { org: "Skild AI", role: "Data Operations Lead", note: "Robotics data systems \xB7 5 platforms \xB7 30+ operators \xB7 task success +40%, overhead \u201350%" },
-      { org: "Break the Web / LiveLM", role: "AI Systems Engineer", note: "Real-time grounding \xB7 MCP tool-use eval \xB7 hit/partial/stale/miss abstention" }
+      { org: "OpenHuman (tinyhumansai)", role: "Core Contributor", note: "69 merged upstream PRs \u2014 memory, RPC, privacy/security, reliability, tests" },
+      { org: "Break the Web / LiveLM", role: "AI Systems Engineer", note: "~80K facts \xB7 ok/partial/stale/miss \xB7 ~11 ms warm p50 \xB7 71\xD73 + 512 probes" },
+      { org: "Skild AI", role: "Data Operations Lead", note: "5 platforms \xB7 30+ operators \xB7 task success +40%, overhead \u201350% \xB7 Series C demos" }
     ],
     focus: [
-      "Agent verification & fail-closed gates",
-      "Grounded retrieval",
-      "Evaluation harnesses & failure modes",
-      "Sandboxing & independent verification",
-      "On-device inference (MLX / CoreML)",
-      "MCP & tool-augmented agents"
+      "Agent reliability & fail-closed verification",
+      "Evaluation harnesses & trace analysis",
+      "Grounded / hybrid retrieval",
+      "Local inference (MLX / CoreML)",
+      "Sandboxing & formal methods",
+      "Operational reliability"
     ]
   };
   window.PROJECTS = [
     {
       slug: "openhuman",
       title: "OpenHuman",
-      kicker: "Core contributor \xB7 Personal AI memory",
-      blurb: "Own life_capture / curated_memory in the Rust core \u2014 the on-device index that turns messages, mail, calendar, and contacts into agent-reasoned knowledge.",
-      longBlurb: "OpenHuman is a local-first personal AI (35k+ stars). I own the memory subsystem: hybrid retrieval (FTS + sqlite-vec), multi-source ingest, contact resolution, and session management \u2014 plus reliability work on chat streams, security-policy routes, and onboarding.",
+      kicker: "Core contributor \xB7 69 merged PRs",
+      blurb: "Landed 69 merged upstream PRs across memory, typed RPC/controllers, privacy/security, chat reliability, and tests \u2014 plus SQLite contact resolution and a prototyped on-device personal index.",
+      longBlurb: "OpenHuman is a local-first personal AI (35k+ stars). Merged work spans citations/namespaces, CNContactStore identity scoring, a ~1,500-line CLI\u2192domain refactor, and 196 tests. Personal-index (life_capture) work is designed/prototyped \u2014 not claimed as fully merged A1\u2013A7.",
       metrics: [
+        { k: "merged PRs", v: "69" },
+        { k: "tests added", v: "196" },
         { k: "upstream stars", v: "35k+" },
-        { k: "commits", v: "80+" },
-        { k: "stack", v: "Rust" },
-        { k: "scope", v: "memory core" }
+        { k: "stack", v: "Rust/TS" }
       ],
       findings: [
-        "Personal context compounds only if ingest is correct before embed",
-        "Hybrid FTS + vectors beats either alone for life-capture retrieval",
-        "Contributor work spans memory, chat reliability, and security policy"
+        "Count merged PRs, not branch commit totals",
+        "Contact identity is a product surface, not a glue script",
+        "Prototype personal-index branches \u2260 shipped subsystems"
       ],
-      stack: ["Rust", "SQLite", "sqlite-vec", "EventKit"],
+      stack: ["Rust", "TypeScript", "SQLite", "sqlite-vec"],
       repo: "tinyhumansai/openhuman",
       color: "violet"
     },
@@ -49,20 +49,20 @@
       slug: "bridge",
       title: "Bridge",
       kicker: "Reliable coding-agent execution \xB7 private",
-      blurb: "Spawn / verify / deliver with default-deny OS sandboxing. Fresh-checkout verification \u2014 agents cannot certify their own success.",
-      longBlurb: "Coding agents run in isolated git worktrees with declared allowed paths. Scope violations fail closed and are re-checked in a fresh checkout. 77 pipeline invariants with property tests plus TLA+ / Z3 / Lean verification layers. Repo is private \u2014 happy to walk through architecture and demos.",
+      blurb: "Spawn \u2192 verify \u2192 deliver with deny-default sandboxing, leased worktrees, and fresh-checkout verification. 77 invariants; 52 checked/proved.",
+      longBlurb: "Isolated agent runtime: allowlisted adapters, macOS Seatbelt, leased worktrees, fresh-checkout verification so workers cannot certify their own outputs. 77 invariants with 28 property checkers, 8 Z3 proofs, 5 TLA+ models (incl. 1.58M-state exploration), and Lean proofs.",
       metrics: [
         { k: "invariants", v: "77" },
-        { k: "sandbox", v: "deny-default" },
-        { k: "verify", v: "fresh checkout" },
-        { k: "proofs", v: "TLA+/Z3/Lean" }
+        { k: "checked/proved", v: "52" },
+        { k: "Z3 proofs", v: "8" },
+        { k: "TLA+ models", v: "5" }
       ],
       findings: [
-        "Detecting a scope violation is useless if the gate still passes",
-        "Worker self-reports are not verification",
-        "Fail-closed beats fail-open \u2014 every time"
+        "Workers must not certify their own outputs",
+        "Fail-closed verification beats self-report",
+        "Formal methods belong next to the runtime, not in a drawer"
       ],
-      stack: ["Go", "Seatbelt", "Git worktrees", "TLA+", "Z3", "Lean"],
+      stack: ["Go", "Seatbelt", "TLA+", "Z3", "Lean"],
       repo: null,
       private: true,
       color: "amber"
@@ -71,84 +71,63 @@
       slug: "officeqa-arena",
       title: "OfficeQA Arena",
       kicker: "Sentient Cohort 0 \xB7 Grounded QA",
-      blurb: "Ranked top tier on a 246-task grounded financial QA benchmark. Retrieval and tool choice \u2014 not \u201Creasoning\u201D \u2014 drove most failures.",
-      longBlurb: "Systematic exploration of grounded numerical QA over Treasury docs. Multiple architectural generations and thousands of task evaluations. Simplicity won: shell grep on raw text beat heavyweight multi-component pipelines. Full writeup in research.pdf.",
+      blurb: "184.5/246 (75%) for $1.71 after 12 architecture rounds and ~4,400 evaluations. Evidence selection caused 48% of failures.",
+      longBlurb: "Grounded numerical QA over Treasury docs. Trace analysis: evidence selection caused 48% of failures; correctly grounded Python answers had 0% arithmetic errors \u2014 retrieval/tool selection, not model arithmetic, dominated.",
       metrics: [
-        { k: "tasks", v: "246" },
-        { k: "rank", v: "top tier" },
-        { k: "evals", v: "3,600+" },
-        { k: "paper", v: "research.pdf" }
+        { k: "score", v: "184.5", unit: "/246" },
+        { k: "pass", v: "75%" },
+        { k: "cost", v: "$1.71" },
+        { k: "evals", v: "~4,400" }
       ],
       findings: [
-        "Shell grep beat a heavyweight consensus pipeline",
-        "Wrong table/row/column extraction dominated failures",
-        "System fixes beat prompt-only ceilings"
+        "Evidence selection caused 48% of failures",
+        "Correctly grounded Python: 0% arithmetic errors",
+        "System architecture beats prompt-only ceilings"
       ],
       stack: ["Python", "Retrieval", "Eval harness"],
       repo: "jwalin-shah/officeqa-arena",
       color: "orange"
     },
     {
-      slug: "knowledge-engine",
-      title: "Knowledge Engine",
-      kicker: "Local code & axiom graph \xB7 private",
-      blurb: "cocoindex + Neo4j + tldr CALLS \u2014 the retrieval substrate Bridge consumes at spawn. Parity gates fail closed when disk and graph disagree.",
-      longBlurb: "Local Neo4j graph indexing axioms, source references, and code structure. Catch-up indexing certified with exact file\u2194Chunk parity. Dumb pipe by design: materialize facts; Bridge owns context assembly at spawn.",
+      slug: "voice-engine",
+      title: "Voice Engine",
+      kicker: "On-device speech \xB7 local inference",
+      blurb: "Fully local Swift/CoreML dictation: Moonshine ASR, VAD, punctuation, native injection. 348/349 tests pass; one isolated CoreML OS regression.",
+      longBlurb: "Zero-network dictation on Apple Silicon with WER/RTF harnesses for model/config tradeoffs. Public WER table omitted until the benchmark report is committed (SoT VO-03).",
       metrics: [
-        { k: "index", v: "cocoindex" },
-        { k: "graph", v: "Neo4j" },
-        { k: "gate", v: "parity fail-closed" },
-        { k: "consumer", v: "Bridge spawn" }
+        { k: "tests", v: "348/349" },
+        { k: "runtime", v: "local" },
+        { k: "stack", v: "Swift/CoreML" },
+        { k: "harness", v: "WER/RTF" }
       ],
       findings: [
-        "Graph must match disk or the gate fails \u2014 no silent drift",
-        "Retrieval substrate is infrastructure, not an agent persona",
-        "Bridge consumes; KE does not invent success"
+        "One known CoreML OS-runtime failure \u2014 stated honestly",
+        "Measure before shipping the bigger model",
+        "Local injection beats clipboard hacks"
       ],
-      stack: ["Python", "cocoindex", "Neo4j", "tldr"],
-      repo: null,
-      private: true,
+      stack: ["Swift", "CoreML", "MLX"],
+      repo: "jwalin-shah/voice-engine-swift",
       color: "cyan"
     },
     {
-      slug: "voice-engine",
-      title: "Voice Engine",
-      kicker: "Local dictation \xB7 measured selection",
-      blurb: "26 ASR models benchmarked. moonshine-tiny wins on device \u2014 same accuracy class, 14\xD7 faster than a 2.5B alternative.",
-      longBlurb: "Fully local menubar dictation: CoreML + Moonshine-tiny, no clipboard, no network. Model choice came from WER/RTF on 560 clips across 7 categories.",
+      slug: "jarvis",
+      title: "Jarvis",
+      kicker: "Local-first personal agent \xB7 archived",
+      blurb: "8 GB M2 Air: 0.42 s mean / 1.15 s p95, Hit@5 0.88, 96.2% hallucination-gate pass across 37 configs \u2014 precursor to OpenHuman memory work.",
+      longBlurb: "Privacy-first local assistant with measured latency, retrieval, and hallucination gates. First project to cut when a tailored r\xE9sum\xE9 needs space.",
       metrics: [
-        { k: "WER", v: "0.2177" },
-        { k: "RTF", v: "0.05" },
-        { k: "models tested", v: "26" },
-        { k: "clips", v: "560" }
+        { k: "mean", v: "0.42s" },
+        { k: "p95", v: "1.15s" },
+        { k: "Hit@5", v: "0.88" },
+        { k: "halluc. gate", v: "96.2%" }
       ],
       findings: [
-        "Near-identical WER can hide a 14\xD7 latency cliff",
-        "Minimal repro beats speculative rearchitecture",
-        "On-device beats cloud when privacy + p95 matter"
+        "Exact gates beat vibes for local agents",
+        "Precursor patterns later informed OpenHuman work"
       ],
-      stack: ["Swift", "CoreML", "ANE", "Python"],
-      repo: "jwalin-shah/voice-engine-swift",
+      stack: ["MLX", "sqlite-vec", "Python"],
+      repo: "jwalin-shah/jarvis-ai-assistant",
       color: "lime"
-    },
-    {
-      slug: "tensor-logic",
-      title: "Tensor Logic",
-      kicker: "Empirical evaluation of Domingos (2025)",
-      blurb: "Runnable demos from einsum \u2192 continual learning. Limits documented, not hidden.",
-      longBlurb: "A learning / falsification project walking Pedro Domingos' tensor logic paper. Limits (parity/XOR class) are part of the result.",
-      metrics: [
-        { k: "paper", v: "Domingos 2025" },
-        { k: "form", v: "demos" },
-        { k: "stance", v: "falsify" }
-      ],
-      findings: [
-        "Closed-form operators crush parameter count when they exist",
-        "Honest limits are part of the result"
-      ],
-      stack: ["Go"],
-      repo: "jwalin-shah/tensor-logic",
-      color: "rose"
     }
   ];
   window.STATS = {
@@ -169,21 +148,21 @@
       })
     ),
     themes: [
-      { label: "agent verification", weight: 1 },
+      { label: "agent reliability", weight: 1 },
       { label: "evaluation", weight: 0.95 },
-      { label: "grounded retrieval", weight: 0.9 },
+      { label: "local inference", weight: 0.9 },
       { label: "sandboxing", weight: 0.88 },
-      { label: "fail-closed gates", weight: 0.85 },
-      { label: "on-device", weight: 0.75 },
-      { label: "MCP / tools", weight: 0.7 },
+      { label: "grounded retrieval", weight: 0.85 },
+      { label: "formal methods", weight: 0.8 },
+      { label: "trace analysis", weight: 0.75 },
       { label: "robotics ops", weight: 0.55 }
     ],
     recentActivity: [
-      { date: "Mar 2026\u2013", what: "OpenHuman life_capture / curated_memory ownership", repo: "tinyhumansai/openhuman", href: "https://github.com/tinyhumansai/openhuman" },
-      { date: "2026", what: "Bridge \u2014 spawn/verify/deliver + invariant catalog", repo: null, href: null },
-      { date: "2026", what: "OfficeQA Arena \u2014 Sentient Cohort 0 grounded QA", repo: "jwalin-shah/officeqa-arena", href: "https://github.com/jwalin-shah/officeqa-arena" },
-      { date: "2026", what: "Knowledge Engine \u2014 cocoindex/Neo4j parity gates", repo: null, href: null },
-      { date: "2025", what: "Skild AI \u2014 robotics data ops through Series C demos", repo: null, href: null }
+      { date: "Mar 2026\u2013", what: "OpenHuman \u2014 69 merged upstream PRs", repo: "tinyhumansai/openhuman", href: "https://github.com/tinyhumansai/openhuman" },
+      { date: "May 2026\u2013", what: "LiveLM \u2014 retrieval + abstention eval", repo: null, href: null },
+      { date: "2026", what: "Bridge \u2014 spawn/verify/deliver + 77 invariants", repo: null, href: null },
+      { date: "2026", what: "OfficeQA Arena \u2014 184.5/246 grounded QA", repo: "jwalin-shah/officeqa-arena", href: "https://github.com/jwalin-shah/officeqa-arena" },
+      { date: "2025", what: "Skild AI \u2014 robotics data ops through Series C", repo: null, href: null }
     ]
   };
 
@@ -193,13 +172,13 @@
     const projects = window.PROJECTS;
     const stats = window.STATS;
     const [openIdx, setOpenIdx] = React.useState(null);
-    return /* @__PURE__ */ React.createElement("div", { className: "ed-root" }, /* @__PURE__ */ React.createElement("div", { className: "ed-paper" }, /* @__PURE__ */ React.createElement("header", { className: "ed-masthead" }, /* @__PURE__ */ React.createElement("div", { className: "ed-mast-row" }, /* @__PURE__ */ React.createElement("span", { className: "ed-mast-vol" }, "EST. 2024 \xB7 UPDATED AUG 2026"), /* @__PURE__ */ React.createElement("span", { className: "ed-mast-loc" }, "FILED FROM SF BAY")), /* @__PURE__ */ React.createElement("h1", { className: "ed-mast-title" }, "Jwalin Shah"), /* @__PURE__ */ React.createElement("div", { className: "ed-mast-rule" }), /* @__PURE__ */ React.createElement("div", { className: "ed-mast-sub" }, "Agent evaluation, grounded retrieval, and verification infrastructure \u2014 with the receipts.")), /* @__PURE__ */ React.createElement("section", { className: "ed-lede" }, /* @__PURE__ */ React.createElement("div", { className: "ed-lede-kicker" }, "AI SYSTEMS & RELIABILITY ENGINEER \xB7 OPEN TO ROLES & COLLABS"), /* @__PURE__ */ React.createElement("h2", { className: "ed-lede-h" }, "Systems that ", /* @__PURE__ */ React.createElement("em", null, "constrain, observe,"), " and ", /* @__PURE__ */ React.createElement("em", null, "verify"), " probabilistic agents \u2014 so success is measured, not claimed."), /* @__PURE__ */ React.createElement("p", { className: "ed-lede-p" }, /* @__PURE__ */ React.createElement("span", { className: "ed-dropcap" }, "I"), "own the memory core for OpenHuman, ran robotics data ops at Skild through a $1B Series C, and build verification + evaluation systems (Bridge, LiveLM, OfficeQA) that force agents to abstain or fail closed when evidence is missing. The through-line: isolation, contracts, independent checks, and failure-mode measurement."), /* @__PURE__ */ React.createElement("div", { className: "ed-lede-meta" }, /* @__PURE__ */ React.createElement("a", { href: `mailto:${email}` }, email), /* @__PURE__ */ React.createElement("span", null, "\xB7"), /* @__PURE__ */ React.createElement("a", { href: "https://github.com/jwalin-shah", target: "_blank", rel: "noopener" }, "github.com/jwalin-shah"), /* @__PURE__ */ React.createElement("span", null, "\xB7"), /* @__PURE__ */ React.createElement("a", { href: "https://linkedin.com/in/jwalin-shah", target: "_blank", rel: "noopener" }, "linkedin/jwalin-shah"))), /* @__PURE__ */ React.createElement("section", { className: "ed-features" }, /* @__PURE__ */ React.createElement("div", { className: "ed-section-rule" }, /* @__PURE__ */ React.createElement("span", null, "FEATURED PROJECTS"), /* @__PURE__ */ React.createElement("span", { className: "ed-section-no" }, "NO. 01")), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-grid" }, projects.slice(0, 4).map((p, i) => /* @__PURE__ */ React.createElement("article", { key: p.slug, className: `ed-feat ed-feat-${i}` }, /* @__PURE__ */ React.createElement("div", { className: "ed-feat-no" }, String(i + 1).padStart(2, "0")), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-kicker" }, p.kicker), /* @__PURE__ */ React.createElement("h3", { className: "ed-feat-title" }, p.title), /* @__PURE__ */ React.createElement("p", { className: "ed-feat-blurb" }, p.blurb), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-stats" }, p.metrics.slice(0, 2).map((m, j) => /* @__PURE__ */ React.createElement("div", { key: j, className: "ed-feat-stat" }, /* @__PURE__ */ React.createElement("div", { className: "ed-feat-stat-v" }, m.v), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-stat-k" }, m.k)))), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-actions" }, /* @__PURE__ */ React.createElement("button", { className: "ed-feat-read", onClick: () => setOpenIdx(i) }, "read the report \u27F6"), p.repo ? /* @__PURE__ */ React.createElement("a", { className: "ed-feat-repo", href: `https://github.com/${p.repo}`, target: "_blank", rel: "noopener" }, "github \u2197") : /* @__PURE__ */ React.createElement("span", { className: "ed-feat-repo" }, "private \xB7 ask me")))))), /* @__PURE__ */ React.createElement("section", { className: "ed-findings" }, /* @__PURE__ */ React.createElement("div", { className: "ed-section-rule" }, /* @__PURE__ */ React.createElement("span", null, "SELECTED FINDINGS"), /* @__PURE__ */ React.createElement("span", { className: "ed-section-no" }, "NO. 02")), /* @__PURE__ */ React.createElement("table", { className: "ed-table" }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: "8%" } }, "\u2116"), /* @__PURE__ */ React.createElement("th", { style: { width: "22%" } }, "FROM"), /* @__PURE__ */ React.createElement("th", null, "FINDING"))), /* @__PURE__ */ React.createElement("tbody", null, [
-      { from: "openhuman", line: "On-device personal memory only compounds if ingest is correct before embed \u2014 hybrid FTS + vectors beats either alone." },
-      { from: "bridge", line: "Detecting a scope violation is useless if the gate still passes. Agents must not certify their own success." },
-      { from: "knowledge-engine", line: "Disk \u2194 graph parity is a gate: indexing that drifts silently is not a retrieval substrate." },
-      { from: "officeqa-arena", line: "Retrieval and tool selection \u2014 not model arithmetic \u2014 drove most grounded-QA failures." },
-      { from: "voice-engine", line: "Near-identical WER can hide a 14\xD7 latency cliff \u2014 measure RTF before shipping the bigger model." },
-      { from: "btw / livelm", line: "Explicit hit/partial/stale/miss routing: abstain when evidence is missing instead of inventing a plausible answer." }
+    return /* @__PURE__ */ React.createElement("div", { className: "ed-root" }, /* @__PURE__ */ React.createElement("div", { className: "ed-paper" }, /* @__PURE__ */ React.createElement("header", { className: "ed-masthead" }, /* @__PURE__ */ React.createElement("div", { className: "ed-mast-row" }, /* @__PURE__ */ React.createElement("span", { className: "ed-mast-vol" }, "EST. 2024 \xB7 UPDATED AUG 2026"), /* @__PURE__ */ React.createElement("span", { className: "ed-mast-loc" }, "FILED FROM SF BAY")), /* @__PURE__ */ React.createElement("h1", { className: "ed-mast-title" }, "Jwalin Shah"), /* @__PURE__ */ React.createElement("div", { className: "ed-mast-rule" }), /* @__PURE__ */ React.createElement("div", { className: "ed-mast-sub" }, "Agent reliability, evaluation, and local inference \u2014 with the receipts.")), /* @__PURE__ */ React.createElement("section", { className: "ed-lede" }, /* @__PURE__ */ React.createElement("div", { className: "ed-lede-kicker" }, "AI SYSTEMS ENGINEER \xB7 OPEN TO ROLES & COLLABS"), /* @__PURE__ */ React.createElement("h2", { className: "ed-lede-h" }, "Systems that ", /* @__PURE__ */ React.createElement("em", null, "constrain, observe,"), " and ", /* @__PURE__ */ React.createElement("em", null, "verify"), " probabilistic agents \u2014 so success is measured, not claimed."), /* @__PURE__ */ React.createElement("p", { className: "ed-lede-p" }, /* @__PURE__ */ React.createElement("span", { className: "ed-dropcap" }, "I"), "land merged upstream work on OpenHuman, build LiveLM retrieval that abstains on stale evidence, and ship verification runtimes (Bridge) plus measured eval systems (OfficeQA, Voice, Jarvis). The through-line: deterministic systems around nondeterministic models."), /* @__PURE__ */ React.createElement("div", { className: "ed-lede-meta" }, /* @__PURE__ */ React.createElement("a", { href: `mailto:${email}` }, email), /* @__PURE__ */ React.createElement("span", null, "\xB7"), /* @__PURE__ */ React.createElement("a", { href: "https://github.com/jwalin-shah", target: "_blank", rel: "noopener" }, "github.com/jwalin-shah"), /* @__PURE__ */ React.createElement("span", null, "\xB7"), /* @__PURE__ */ React.createElement("a", { href: "https://linkedin.com/in/jwalin-shah", target: "_blank", rel: "noopener" }, "linkedin/jwalin-shah"))), /* @__PURE__ */ React.createElement("section", { className: "ed-features" }, /* @__PURE__ */ React.createElement("div", { className: "ed-section-rule" }, /* @__PURE__ */ React.createElement("span", null, "FEATURED PROJECTS"), /* @__PURE__ */ React.createElement("span", { className: "ed-section-no" }, "NO. 01")), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-grid" }, projects.slice(0, 4).map((p, i) => /* @__PURE__ */ React.createElement("article", { key: p.slug, className: `ed-feat ed-feat-${i}` }, /* @__PURE__ */ React.createElement("div", { className: "ed-feat-no" }, String(i + 1).padStart(2, "0")), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-kicker" }, p.kicker), /* @__PURE__ */ React.createElement("h3", { className: "ed-feat-title" }, p.title), /* @__PURE__ */ React.createElement("p", { className: "ed-feat-blurb" }, p.blurb), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-stats" }, p.metrics.slice(0, 2).map((m, j) => /* @__PURE__ */ React.createElement("div", { key: j, className: "ed-feat-stat" }, /* @__PURE__ */ React.createElement("div", { className: "ed-feat-stat-v" }, m.v), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-stat-k" }, m.k)))), /* @__PURE__ */ React.createElement("div", { className: "ed-feat-actions" }, /* @__PURE__ */ React.createElement("button", { className: "ed-feat-read", onClick: () => setOpenIdx(i) }, "read the report \u27F6"), p.repo ? /* @__PURE__ */ React.createElement("a", { className: "ed-feat-repo", href: `https://github.com/${p.repo}`, target: "_blank", rel: "noopener" }, "github \u2197") : /* @__PURE__ */ React.createElement("span", { className: "ed-feat-repo" }, "private \xB7 ask me")))))), /* @__PURE__ */ React.createElement("section", { className: "ed-findings" }, /* @__PURE__ */ React.createElement("div", { className: "ed-section-rule" }, /* @__PURE__ */ React.createElement("span", null, "SELECTED FINDINGS"), /* @__PURE__ */ React.createElement("span", { className: "ed-section-no" }, "NO. 02")), /* @__PURE__ */ React.createElement("table", { className: "ed-table" }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: "8%" } }, "\u2116"), /* @__PURE__ */ React.createElement("th", { style: { width: "22%" } }, "FROM"), /* @__PURE__ */ React.createElement("th", null, "FINDING"))), /* @__PURE__ */ React.createElement("tbody", null, [
+      { from: "openhuman", line: "Count merged PRs (69), not branch commits \u2014 and never claim unmerged personal-index branches as shipped." },
+      { from: "bridge", line: "Workers must not certify their own outputs: fresh-checkout verification + fail-closed gates." },
+      { from: "officeqa-arena", line: "Evidence selection caused 48% of failures; correctly grounded Python had 0% arithmetic errors." },
+      { from: "voice-engine", line: "348/349 tests pass; one isolated CoreML OS regression is stated, not hidden." },
+      { from: "jarvis", line: "0.42s mean / Hit@5 0.88 / 96.2% hallucination-gate \u2014 exact local-agent gates beat vibes." },
+      { from: "btw / livelm", line: "ok/partial/stale/miss routing at ~11 ms warm p50: abstain instead of inventing stale answers." }
     ].map((row, i) => /* @__PURE__ */ React.createElement("tr", { key: i }, /* @__PURE__ */ React.createElement("td", { className: "ed-td-no" }, String(i + 1).padStart(2, "0")), /* @__PURE__ */ React.createElement("td", { className: "ed-td-from" }, row.from), /* @__PURE__ */ React.createElement("td", null, row.line)))))), /* @__PURE__ */ React.createElement("section", { className: "ed-twoup" }, /* @__PURE__ */ React.createElement("div", { className: "ed-twoup-col" }, /* @__PURE__ */ React.createElement("div", { className: "ed-section-rule" }, /* @__PURE__ */ React.createElement("span", null, "FOCUS AREAS"), /* @__PURE__ */ React.createElement("span", { className: "ed-section-no" }, "NO. 03")), /* @__PURE__ */ React.createElement("ul", { className: "ed-focus-list" }, focus.map((f, i) => /* @__PURE__ */ React.createElement("li", { key: i }, /* @__PURE__ */ React.createElement("span", { className: "ed-focus-no" }, String(i + 1).padStart(2, "0")), f)))), /* @__PURE__ */ React.createElement("div", { className: "ed-twoup-col" }, /* @__PURE__ */ React.createElement("div", { className: "ed-section-rule" }, /* @__PURE__ */ React.createElement("span", null, "FIELD WORK"), /* @__PURE__ */ React.createElement("span", { className: "ed-section-no" }, "NO. 04")), background.map((b, i) => /* @__PURE__ */ React.createElement("div", { key: i, className: "ed-bg-row" }, /* @__PURE__ */ React.createElement("div", { className: "ed-bg-org" }, b.org), /* @__PURE__ */ React.createElement("div", { className: "ed-bg-role" }, b.role), /* @__PURE__ */ React.createElement("div", { className: "ed-bg-note" }, b.note))), /* @__PURE__ */ React.createElement("div", { className: "ed-bg-row" }, /* @__PURE__ */ React.createElement("div", { className: "ed-bg-org" }, "Independent"), /* @__PURE__ */ React.createElement("div", { className: "ed-bg-role" }, stats.publicRepos, " public repos \xB7 primarily Python"), /* @__PURE__ */ React.createElement("div", { className: "ed-bg-note" }, /* @__PURE__ */ React.createElement("a", { href: "https://github.com/jwalin-shah?tab=repositories", target: "_blank", rel: "noopener" }, "github.com/jwalin-shah \u2192"))))), /* @__PURE__ */ React.createElement("section", { className: "ed-ledger" }, /* @__PURE__ */ React.createElement("div", { className: "ed-section-rule" }, /* @__PURE__ */ React.createElement("span", null, "LEDGER \xB7 LANGUAGES & THEMES"), /* @__PURE__ */ React.createElement("span", { className: "ed-section-no" }, "NO. 05")), /* @__PURE__ */ React.createElement("div", { className: "ed-ledger-grid" }, /* @__PURE__ */ React.createElement("div", { className: "ed-ledger-langs" }, /* @__PURE__ */ React.createElement("div", { className: "ed-ledger-h" }, "By Primary Language (", stats.publicRepos, " public repos)"), stats.topLangs.map((l, i) => /* @__PURE__ */ React.createElement("div", { key: i, className: "ed-lang-row" }, /* @__PURE__ */ React.createElement("div", { className: "ed-lang-name" }, l.lang), /* @__PURE__ */ React.createElement("div", { className: "ed-lang-bar" }, /* @__PURE__ */ React.createElement("div", { className: "ed-lang-fill", style: { width: `${l.pct}%` } })), /* @__PURE__ */ React.createElement("div", { className: "ed-lang-pct" }, l.pct, "%")))), /* @__PURE__ */ React.createElement("div", { className: "ed-ledger-themes" }, /* @__PURE__ */ React.createElement("div", { className: "ed-ledger-h" }, "By Theme (weighted)"), /* @__PURE__ */ React.createElement("div", { className: "ed-themes" }, stats.themes.map((t, i) => /* @__PURE__ */ React.createElement(
       "span",
       {
