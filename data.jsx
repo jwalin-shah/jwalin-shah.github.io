@@ -1,13 +1,13 @@
-// Canonical profile data — aligned with resume-general.typ (2026-08-02)
-// Spine: agent infrastructure + verification; experience: OpenHuman · Skild · BTW
+// Canonical profile data — aligned with resume-general.typ master spine (2026-08-02)
+// AI Systems & Reliability Engineer · Bridge flagship · no Inbox on homepage
 
 window.PROFILE = {
   name: "Jwalin Shah",
   handle: "jwalin-shah",
   email: "jwalinshah13@gmail.com",
   linkedin: "linkedin.com/in/jwalin-shah",
-  tagline: "AI Systems Engineer — Agent Infrastructure · Evaluation · Local-First AI",
-  oneliner: "I build systems that constrain, observe, and verify probabilistic agents — so success is measured, not claimed.",
+  tagline: "AI Systems & Reliability Engineer — Agent Evaluation · Grounded Retrieval · Verification Infrastructure",
+  oneliner: "Builds systems that constrain, observe, and verify probabilistic agents under real-world constraints.",
   location: "San Francisco Bay Area",
   status: "open to roles & research collabs",
   background: [
@@ -16,16 +16,17 @@ window.PROFILE = {
     { org: "Break the Web / LiveLM", role: "AI Systems Engineer", note: "Real-time grounding · MCP tool-use eval · hit/partial/stale/miss abstention" },
   ],
   focus: [
-    "Agent sandboxing & verification",
+    "Agent verification & fail-closed gates",
+    "Grounded retrieval",
     "Evaluation harnesses & failure modes",
+    "Sandboxing & independent verification",
     "On-device inference (MLX / CoreML)",
-    "Hybrid retrieval & personal memory",
-    "Grounded / deterministic tool use",
     "MCP & tool-augmented agents",
   ],
 };
 
-// Featured first four are public; Bridge is discussable but private (no dead GitHub link).
+// Featured first four drive the homepage grid (dir-editorial slice(0,4)).
+// Order = master thesis. Inbox / Jarvis are NOT on this page.
 window.PROJECTS = [
   {
     slug: "openhuman",
@@ -49,11 +50,76 @@ window.PROJECTS = [
     color: "violet",
   },
   {
+    slug: "bridge",
+    title: "Bridge",
+    kicker: "Reliable coding-agent execution · private",
+    blurb: "Spawn / verify / deliver with default-deny OS sandboxing. Fresh-checkout verification — agents cannot certify their own success.",
+    longBlurb: "Coding agents run in isolated git worktrees with declared allowed paths. Scope violations fail closed and are re-checked in a fresh checkout. 77 pipeline invariants with property tests plus TLA+ / Z3 / Lean verification layers. Repo is private — happy to walk through architecture and demos.",
+    metrics: [
+      { k: "invariants", v: "77" },
+      { k: "sandbox", v: "deny-default" },
+      { k: "verify", v: "fresh checkout" },
+      { k: "proofs", v: "TLA+/Z3/Lean" },
+    ],
+    findings: [
+      "Detecting a scope violation is useless if the gate still passes",
+      "Worker self-reports are not verification",
+      "Fail-closed beats fail-open — every time",
+    ],
+    stack: ["Go", "Seatbelt", "Git worktrees", "TLA+", "Z3", "Lean"],
+    repo: null,
+    private: true,
+    color: "amber",
+  },
+  {
+    slug: "officeqa-arena",
+    title: "OfficeQA Arena",
+    kicker: "Sentient Cohort 0 · Grounded QA",
+    blurb: "Ranked top tier on a 246-task grounded financial QA benchmark. Retrieval and tool choice — not “reasoning” — drove most failures.",
+    longBlurb: "Systematic exploration of grounded numerical QA over Treasury docs. Multiple architectural generations and thousands of task evaluations. Simplicity won: shell grep on raw text beat heavyweight multi-component pipelines. Full writeup in research.pdf.",
+    metrics: [
+      { k: "tasks", v: "246" },
+      { k: "rank", v: "top tier" },
+      { k: "evals", v: "3,600+" },
+      { k: "paper", v: "research.pdf" },
+    ],
+    findings: [
+      "Shell grep beat a heavyweight consensus pipeline",
+      "Wrong table/row/column extraction dominated failures",
+      "System fixes beat prompt-only ceilings",
+    ],
+    stack: ["Python", "Retrieval", "Eval harness"],
+    repo: "jwalin-shah/officeqa-arena",
+    color: "orange",
+  },
+  {
+    slug: "knowledge-engine",
+    title: "Knowledge Engine",
+    kicker: "Local code & axiom graph · private",
+    blurb: "cocoindex + Neo4j + tldr CALLS — the retrieval substrate Bridge consumes at spawn. Parity gates fail closed when disk and graph disagree.",
+    longBlurb: "Local Neo4j graph indexing axioms, source references, and code structure. Catch-up indexing certified with exact file↔Chunk parity. Dumb pipe by design: materialize facts; Bridge owns context assembly at spawn.",
+    metrics: [
+      { k: "index", v: "cocoindex" },
+      { k: "graph", v: "Neo4j" },
+      { k: "gate", v: "parity fail-closed" },
+      { k: "consumer", v: "Bridge spawn" },
+    ],
+    findings: [
+      "Graph must match disk or the gate fails — no silent drift",
+      "Retrieval substrate is infrastructure, not an agent persona",
+      "Bridge consumes; KE does not invent success",
+    ],
+    stack: ["Python", "cocoindex", "Neo4j", "tldr"],
+    repo: null,
+    private: true,
+    color: "cyan",
+  },
+  {
     slug: "voice-engine",
     title: "Voice Engine",
     kicker: "Local dictation · measured selection",
     blurb: "26 ASR models benchmarked. moonshine-tiny wins on device — same accuracy class, 14× faster than a 2.5B alternative.",
-    longBlurb: "Fully local menubar dictation: CoreML + Moonshine-tiny, no clipboard, no network. Model choice came from WER/RTF on 560 clips across 7 categories. Root-caused a CoreML production failure to an OS regression with a 4-float minimal repro.",
+    longBlurb: "Fully local menubar dictation: CoreML + Moonshine-tiny, no clipboard, no network. Model choice came from WER/RTF on 560 clips across 7 categories.",
     metrics: [
       { k: "WER", v: "0.2177" },
       { k: "RTF", v: "0.05" },
@@ -67,83 +133,25 @@ window.PROJECTS = [
     ],
     stack: ["Swift", "CoreML", "ANE", "Python"],
     repo: "jwalin-shah/voice-engine-swift",
-    color: "cyan",
+    color: "lime",
   },
   {
     slug: "tensor-logic",
     title: "Tensor Logic",
     kicker: "Empirical evaluation of Domingos (2025)",
-    blurb: "3 scalars beat a 71M MLP at transitive closure — and the limits are documented, not hidden.",
-    longBlurb: "A learning / falsification project. TL recurrence trained once on 16-node graphs generalizes zero-shot to large OSS import graphs; parity-class tasks remain unlearnable. Architecture patterns reproduced with provenance from Linux, etcd, ZooKeeper, Kubernetes.",
+    blurb: "Runnable demos from einsum → continual learning. Limits documented, not hidden.",
+    longBlurb: "A learning / falsification project walking Pedro Domingos' tensor logic paper. Limits (parity/XOR class) are part of the result.",
     metrics: [
-      { k: "TL params", v: "3" },
-      { k: "MLP", v: "71M", unit: "fails OOD" },
-      { k: "zero-shot", v: "n=1024" },
-      { k: "biggest graph", v: "1,532" },
+      { k: "paper", v: "Domingos 2025" },
+      { k: "form", v: "demos" },
+      { k: "stance", v: "falsify" },
     ],
     findings: [
       "Closed-form operators crush parameter count when they exist",
-      "Honest limits (parity/XOR) are part of the result",
-      "Real OSS graphs > synthetic toys for credibility",
+      "Honest limits are part of the result",
     ],
-    stack: ["Go", "Z₂ algebra"],
+    stack: ["Go"],
     repo: "jwalin-shah/tensor-logic",
-    color: "lime",
-  },
-  {
-    slug: "officeqa-arena",
-    title: "OfficeQA Arena",
-    kicker: "Sentient Cohort 0 · Grounded QA",
-    blurb: "184.5/246 at $1.71. Retrieval and tool choice — not “reasoning” — drove most failures.",
-    longBlurb: "Systematic exploration of grounded numerical QA. Nine architectural generations; 3,600+ task evaluations. Simplicity won: shell grep on raw text beat an 11GB multi-component pipeline.",
-    metrics: [
-      { k: "score", v: "184.5", unit: "/246" },
-      { k: "pass rate", v: "75%" },
-      { k: "cost", v: "$1.71" },
-      { k: "evals", v: "3,600+" },
-    ],
-    findings: [
-      "Shell grep beat a heavyweight consensus pipeline",
-      "48% of failures = wrong table/row/column extraction",
-      "System fixes beat prompt-only ceilings",
-    ],
-    stack: ["Python", "Retrieval", "Eval harness"],
-    repo: "jwalin-shah/officeqa-arena",
-    color: "orange",
-  },
-  {
-    slug: "bridge",
-    title: "Bridge",
-    kicker: "Reliable coding-agent execution · private",
-    blurb: "Spawn / verify / deliver with default-deny OS sandboxing. Agents cannot certify their own success.",
-    longBlurb: "Coding agents run in isolated git worktrees with declared allowed paths. Scope violations fail closed and are re-checked in a fresh checkout. Fixed a fail-open detection gate, hardened six adapter wrappers, and catalogued nine failure modes across multi-repo end-to-end runs. Repo is private — happy to walk through architecture and demos.",
-    metrics: [
-      { k: "sandbox", v: "deny-default" },
-      { k: "adapters", v: "6", unit: "hardened" },
-      { k: "failure modes", v: "9", unit: "catalogued" },
-      { k: "verify", v: "fresh checkout" },
-    ],
-    findings: [
-      "Detecting a scope violation is useless if the gate still passes",
-      "Worker self-reports are not verification",
-      "Worktree .git gitdir pointers break naive scaffold fixes",
-    ],
-    stack: ["Go", "Seatbelt", "Git worktrees"],
-    repo: null,
-    private: true,
-    color: "amber",
-  },
-  {
-    slug: "inbox",
-    title: "Inbox",
-    kicker: "Unified local TUI",
-    blurb: "iMessage, Gmail, Calendar, Drive, Notes, Reminders, GitHub — one terminal surface.",
-    metrics: [
-      { k: "sources", v: "7" },
-      { k: "stack", v: "FastAPI + Textual" },
-    ],
-    stack: ["Python", "FastAPI", "Textual"],
-    repo: "jwalin-shah/inbox",
     color: "rose",
   },
 ];
@@ -158,7 +166,6 @@ window.STATS = {
     { lang: "TypeScript", pct: 12 },
     { lang: "Rust / Swift / Other", pct: 18 },
   ],
-  // Placeholder density — replace with live GitHub contributions when wired
   contributions: Array.from({ length: 7 }, (_, r) =>
     Array.from({ length: 26 }, (_, c) => {
       const recency = c / 26;
@@ -169,18 +176,18 @@ window.STATS = {
   themes: [
     { label: "agent verification", weight: 1.0 },
     { label: "evaluation", weight: 0.95 },
-    { label: "local-first", weight: 0.9 },
+    { label: "grounded retrieval", weight: 0.9 },
     { label: "sandboxing", weight: 0.88 },
-    { label: "retrieval", weight: 0.85 },
-    { label: "on-device", weight: 0.8 },
-    { label: "MCP / tools", weight: 0.75 },
+    { label: "fail-closed gates", weight: 0.85 },
+    { label: "on-device", weight: 0.75 },
+    { label: "MCP / tools", weight: 0.7 },
     { label: "robotics ops", weight: 0.55 },
   ],
   recentActivity: [
-    { date: "Jul 2026", what: "Voice Engine — measured ASR selection on device", repo: "voice-engine-swift", href: "https://github.com/jwalin-shah/voice-engine-swift" },
-    { date: "Jul 2026", what: "Inbox TUI — seven local sources, one surface", repo: "inbox", href: "https://github.com/jwalin-shah/inbox" },
-    { date: "Jul 2026", what: "Tensor Logic — Domingos demos + falsification notes", repo: "tensor-logic", href: "https://github.com/jwalin-shah/tensor-logic" },
-    { date: "Mar 2026–", what: "OpenHuman life_capture / curated_memory ownership", repo: "openhuman", href: "https://github.com/tinyhumansai/openhuman" },
-    { date: "2025", what: "Skild AI — robotics data ops through Series C demos", repo: "skild", href: null },
+    { date: "Mar 2026–", what: "OpenHuman life_capture / curated_memory ownership", repo: "tinyhumansai/openhuman", href: "https://github.com/tinyhumansai/openhuman" },
+    { date: "2026", what: "Bridge — spawn/verify/deliver + invariant catalog", repo: null, href: null },
+    { date: "2026", what: "OfficeQA Arena — Sentient Cohort 0 grounded QA", repo: "jwalin-shah/officeqa-arena", href: "https://github.com/jwalin-shah/officeqa-arena" },
+    { date: "2026", what: "Knowledge Engine — cocoindex/Neo4j parity gates", repo: null, href: null },
+    { date: "2025", what: "Skild AI — robotics data ops through Series C demos", repo: null, href: null },
   ],
 };

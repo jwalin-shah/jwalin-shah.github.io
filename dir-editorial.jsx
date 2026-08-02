@@ -20,13 +20,13 @@ const EditorialDir = () => {
           <h1 className="ed-mast-title">Jwalin Shah</h1>
           <div className="ed-mast-rule" />
           <div className="ed-mast-sub">
-            Agent infrastructure, evaluation, and local-first systems — with the receipts.
+            Agent evaluation, grounded retrieval, and verification infrastructure — with the receipts.
           </div>
         </header>
 
         {/* Lede */}
         <section className="ed-lede">
-          <div className="ed-lede-kicker">AI SYSTEMS ENGINEER · OPEN TO ROLES &amp; COLLABS</div>
+          <div className="ed-lede-kicker">AI SYSTEMS &amp; RELIABILITY ENGINEER · OPEN TO ROLES &amp; COLLABS</div>
           <h2 className="ed-lede-h">
             Systems that <em>constrain, observe,</em> and <em>verify</em> probabilistic agents
             — so success is measured, not claimed.
@@ -34,9 +34,9 @@ const EditorialDir = () => {
           <p className="ed-lede-p">
             <span className="ed-dropcap">I</span>
             own the memory core for OpenHuman, ran robotics data ops at Skild through a $1B
-            Series C, and build evaluation harnesses that force tool-using agents to abstain
-            when evidence is missing. The through-line: isolation, contracts, verification,
-            and failure-mode measurement around models that otherwise invent their own success.
+            Series C, and build verification + evaluation systems (Bridge, LiveLM, OfficeQA)
+            that force agents to abstain or fail closed when evidence is missing. The through-line:
+            isolation, contracts, independent checks, and failure-mode measurement.
           </p>
           <div className="ed-lede-meta">
             <a href={`mailto:${email}`}>{email}</a>
@@ -102,9 +102,9 @@ const EditorialDir = () => {
               {[
                 { from: "openhuman", line: "On-device personal memory only compounds if ingest is correct before embed — hybrid FTS + vectors beats either alone." },
                 { from: "bridge", line: "Detecting a scope violation is useless if the gate still passes. Agents must not certify their own success." },
-                { from: "voice-engine", line: "Near-identical WER can hide a 14× latency cliff — moonshine-tiny beat a 2.5B model on device for real-time dictation." },
-                { from: "officeqa-arena", line: "Shell `grep` on raw TXT outperformed an 11GB SQLite + 10-component pipeline. Retrieval errors dominated failures." },
-                { from: "tensor-logic", line: "A 3-scalar TL recurrence beats a 71M-param MLP on transitive closure; parity/XOR remains unlearnable — limits documented." },
+                { from: "knowledge-engine", line: "Disk ↔ graph parity is a gate: indexing that drifts silently is not a retrieval substrate." },
+                { from: "officeqa-arena", line: "Retrieval and tool selection — not model arithmetic — drove most grounded-QA failures." },
+                { from: "voice-engine", line: "Near-identical WER can hide a 14× latency cliff — measure RTF before shipping the bigger model." },
                 { from: "btw / livelm", line: "Explicit hit/partial/stale/miss routing: abstain when evidence is missing instead of inventing a plausible answer." },
               ].map((row, i) => (
                 <tr key={i}>

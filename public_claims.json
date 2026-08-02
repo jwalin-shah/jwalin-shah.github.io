@@ -12,11 +12,15 @@
   ],
   "required_project_slugs": [
     "openhuman",
-    "voice-engine",
-    "tensor-logic",
-    "officeqa-arena",
     "bridge",
-    "inbox"
+    "officeqa-arena",
+    "knowledge-engine",
+    "voice-engine",
+    "tensor-logic"
   ],
-  "update_marker": "UPDATED AUG 2026"
+  "update_marker": "UPDATED AUG 2026",
+  "positioning": {
+    "title": "AI Systems & Reliability Engineer",
+    "pillars": ["Agent Evaluation", "Grounded Retrieval", "Verification Infrastructure"]
+  }
 }
